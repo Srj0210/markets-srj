@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Stock — SRJahir Markets</title>
 
   <link rel="stylesheet" href="styles.css" />
@@ -14,76 +15,68 @@
 
 <body class="dark">
 
-  <!-- NAV -->
-  <header class="navbar">
-    <div class="nav-left">
-      <img src="logo.png" class="logo" onclick="window.location='index.html'"/>
-      <h1 class="brand">SRJahir Markets</h1>
-    </div>
-
-    <div class="nav-center">
-      <button onclick="window.location='index.html'" class="btn ghost">Home</button>
-    </div>
-  </header>
-
-  <!-- MAIN STOCK PAGE -->
-  <div class="section">
-
-    <!-- HEADER -->
-    <div class="tile stock-header-tile">
-      <div>
-        <h2 id="stockName">Loading...</h2>
-        <div id="stockSymbol" class="symbol-sub"></div>
-      </div>
-
-      <div class="stock-price-box">
-        <div id="stockPrice" class="big-price">—</div>
-        <div id="stockChange" class="change-tag">—</div>
-        <button id="watchBtn" class="btn ghost small-btn">☆ Watch</button>
-      </div>
-    </div>
-
-    <!-- CHART -->
-    <div class="tile">
-      <div class="chart-toolbar">
-        <button data-range="1D" class="range">1D</button>
-        <button data-range="1W" class="range">1W</button>
-        <button data-range="1M" class="range active">1M</button>
-        <button data-range="6M" class="range">6M</button>
-        <button data-range="1Y" class="range">1Y</button>
-        <button data-range="5Y" class="range">5Y</button>
-
-        <span class="type-switch">
-          <label><input type="radio" name="ctype" value="line" checked> Line</label>
-          <label><input type="radio" name="ctype" value="candle"> Candle</label>
-        </span>
-      </div>
-
-      <div id="chart" style="height:460px;"></div>
-    </div>
-
-    <!-- FUNDAMENTALS + NEWS -->
-    <div class="grid fundamentals-grid">
-      
-      <!-- FUNDAMENTALS -->
-      <div class="tile">
-        <h3>Fundamentals</h3>
-        <ul id="fundList" class="fund-list"></ul>
-      </div>
-
-      <!-- NEWS -->
-      <div class="tile">
-        <h3>Related News</h3>
-        <div id="relatedNews"></div>
-      </div>
-
-    </div>
-
+<header class="navbar">
+  <div class="nav-left">
+    <img src="logo.png" class="logo" onclick="window.location='index.html'"/>
+    <h1 class="brand">SRJahir Markets</h1>
   </div>
 
-  <footer class="footer">
-    © 2025 SRJahir Markets — Stock Detail
-  </footer>
+  <div class="nav-right">
+    <button onclick="window.location='index.html'" class="btn ghost">Home</button>
+  </div>
+</header>
+
+<div class="section">
+
+  <!-- Stock Header -->
+  <div class="tile stock-header-tile">
+    <div>
+      <h2 id="stockName">Loading...</h2>
+      <div id="stockSymbol" class="symbol-sub"></div>
+    </div>
+
+    <div class="stock-price-box">
+      <div id="stockPrice" class="big-price">—</div>
+      <div id="stockChange" class="change-tag">—</div>
+      <button id="watchBtn" class="btn ghost small-btn">☆ Watch</button>
+    </div>
+  </div>
+
+  <!-- Chart -->
+  <div class="tile">
+    <div class="chart-toolbar">
+      <button data-range="1D" class="range">1D</button>
+      <button data-range="1W" class="range">1W</button>
+      <button data-range="1M" class="range active">1M</button>
+      <button data-range="6M" class="range">6M</button>
+      <button data-range="1Y" class="range">1Y</button>
+      <button data-range="5Y" class="range">5Y</button>
+
+      <span class="type-switch">
+        <label><input type="radio" name="ctype" value="line" checked /> Line</label>
+        <label><input type="radio" name="ctype" value="candle" /> Candle</label>
+      </span>
+    </div>
+
+    <div id="chart" style="height:420px;"></div>
+  </div>
+
+  <!-- Fundamentals + News -->
+  <div class="grid fundamentals-grid">
+    <div class="tile">
+      <h3>Fundamentals</h3>
+      <ul id="fundList" class="fund-list"></ul>
+    </div>
+
+    <div class="tile">
+      <h3>Related News</h3>
+      <div id="relatedNews"></div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="footer">© 2025 SRJahir Markets — Stock Detail</footer>
 
 </body>
 </html>
