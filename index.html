@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SRJahir Markets — Global Trading Dashboard</title>
 
-  <meta name="description" content="SRJahir Markets — Live stock prices, indices, watchlist, news, and global market insights." />
-
   <link rel="stylesheet" href="styles.css" />
   <script src="animation.js" defer></script>
   <script src="script.js" defer></script>
@@ -14,49 +12,52 @@
 
 <body class="dark">
 
-  <!-- NAVIGATION -->
+  <!-- NAVBAR -->
   <header class="navbar">
     <div class="nav-left">
-      <img src="logo.png" id="logo" class="logo" />
+      <img src="logo.png" class="logo" onclick="window.location='index.html'"/>
       <h1 class="brand">SRJahir Markets</h1>
     </div>
 
     <div class="nav-center">
-      <input id="searchInput" class="search" placeholder="Search stock — AAPL, TSLA, BMW.DE..." />
-      <button id="searchBtn" class="btn">Search</button>
+      <div class="search-wrapper">
+        <input id="searchInput" class="search" placeholder="Search stocks globally — AAPL, TSLA, BMW.DE, RELIANCE.NS" />
+        <div id="suggestBox" class="suggest-box"></div>
+      </div>
     </div>
 
     <div class="nav-right">
-      <button class="btn ghost" onclick="window.location='#watchlistContainer'">⭐ Watchlist</button>
+      <button onclick="window.location='index.html#watchlist'" class="btn ghost watch-btn">⭐ Watchlist</button>
     </div>
   </header>
 
-  <!-- GLOBAL INDICES -->
+
+  <!-- MARKET OVERVIEW -->
   <section class="section">
-    <h2 class="section-title">🌍 Global Market Overview</h2>
+    <h2 class="section-title">Global Market Overview</h2>
     <div id="indicesGrid" class="grid indices-grid"></div>
   </section>
 
   <!-- TRENDING -->
   <section class="section">
-    <h2 class="section-title">🔥 Trending Stocks</h2>
+    <h2 class="section-title">Trending Stocks</h2>
     <div id="trendingGrid" class="grid trending-grid"></div>
   </section>
 
   <!-- WATCHLIST -->
-  <section class="section">
-    <h2 class="section-title">⭐ Your Watchlist</h2>
+  <section class="section" id="watchlist">
+    <h2 class="section-title">Your Watchlist</h2>
     <div id="watchlistContainer" class="grid watchlist-grid"></div>
   </section>
 
   <!-- NEWS -->
   <section class="section">
-    <h2 class="section-title">📰 Latest Market News</h2>
+    <h2 class="section-title">Latest Market News</h2>
     <div id="newsGrid" class="grid news-grid"></div>
   </section>
 
   <footer class="footer">
-    © 2025 SRJahir Markets — All Rights Reserved
+    <p>© 2025 SRJahir Markets — All Rights Reserved</p>
   </footer>
 
 </body>
