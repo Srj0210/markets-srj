@@ -1,118 +1,70 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SRJahir Markets — Global Financial Edition</title>
-  <meta name="description" content="SRJahir Markets — Modern Financial Newspaper for global stock markets. Live indices, news, watchlist and detailed stock pages." />
-  <link rel="stylesheet" href="styles.css" />
-  <!-- Lightweight Charts for stock detail page charts (used in stock.html) -->
-  <script src="https://unpkg.com/lightweight-charts@3.10.0/dist/lightweight-charts.standalone.production.js"></script>
-</head>
-<body>
-  <div id="page">
-    <!-- Masthead -->
-    <header class="masthead">
-      <div class="mast-left">
-        <img src="logo.png" alt="SRJahir Markets" id="logo" />
-      </div>
-      <div class="mast-center">
-        <h1 class="paper-title">SRJahir Markets</h1>
-        <div class="tagline">International Financial Daily</div>
-      </div>
-      <div class="mast-right">
-        <div id="edition-date" class="edition-date"></div>
-        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">🌙/☀️</button>
-      </div>
-    </header>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SRJahir Markets — Global Trading Dashboard</title>
+  <meta name="description" content="SRJahir Markets — Live stock prices, indices, news, charts and global market dashboard." />
 
-    <!-- Breaking ticker -->
-    <div class="breaking-bar">
-      <div class="breaking-label">MARKET BULLETIN</div>
-      <div class="breaking-ticker" id="breakingTicker">Loading latest headlines…</div>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="animation.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+
+<body class="dark">
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-left">
+      <img src="logo.png" id="logo" class="logo" />
+      <h1 class="brand">SRJahir Markets</h1>
     </div>
 
-    <!-- Hero -->
-    <section class="hero">
-      <div class="hero-left">
-        <h2 id="hero-headline">GLOBAL MARKETS ADVANCE AS INVESTORS SHIFT TOWARD TECH AND BLUE-CHIP STRENGTH</h2>
-        <p id="hero-sub">A premium newspaper-style front page for global markets — live indices, market highlights and deep stock pages.</p>
+    <div class="nav-center">
+      <input id="searchInput" class="search" placeholder="Search stock — AAPL, TSLA, META..." />
+      <button id="searchBtn" class="btn search-btn">Search</button>
+    </div>
 
-        <div class="hero-search">
-          <input id="searchInput" placeholder="Search by symbol or company — e.g. AAPL, MSFT, TSLA" />
-          <button id="searchBtn">Search</button>
-        </div>
+    <div class="nav-right">
+      <a href="#" id="watchlistBtn" class="btn ghost">Watchlist ⭐</a>
+    </div>
+  </header>
 
-        <div class="cta-row">
-          <button id="exploreBtn" class="btn-primary">Explore Markets</button>
-          <button id="topStocksBtn" class="btn-ghost">Top Stocks Today</button>
-        </div>
-      </div>
+  <!-- MARKET OVERVIEW -->
+  <section class="section">
+    <h2 class="section-title">Global Market Overview</h2>
+    <div id="indicesGrid" class="grid indices-grid">
+      <!-- Filled dynamically -->
+    </div>
+  </section>
 
-      <div class="hero-right paper-panel">
-        <h3>Market Snapshot</h3>
-        <table id="indicesTable" class="indices-table">
-          <thead><tr><th>Index</th><th>Last</th><th>Chg%</th></tr></thead>
-          <tbody>
-            <!-- Filled by script -->
-          </tbody>
-        </table>
+  <!-- TRENDING STOCKS -->
+  <section class="section">
+    <h2 class="section-title">Trending Stocks</h2>
+    <div id="trendingGrid" class="grid trending-grid">
+      <!-- Filled dynamically -->
+    </div>
+  </section>
 
-        <div class="watchlist-panel">
-          <h4>Watchlist</h4>
-          <ul id="watchlist"></ul>
-        </div>
-      </div>
-    </section>
+  <!-- WATCHLIST -->
+  <section class="section">
+    <h2 class="section-title">Your Watchlist</h2>
+    <div id="watchlistContainer" class="grid watchlist-grid">
+      <!-- Filled dynamically -->
+    </div>
+  </section>
 
-    <!-- Main content: 3-column newspaper -->
-    <main class="content">
-      <div class="col col-left">
-        <article class="lead-article paper-panel">
-          <h2 class="article-title" id="leadTitle">MARKET ANALYSIS</h2>
-          <p id="leadSummary">Today’s markets show rotation into large-cap tech as investors digest macro data. Read charts and details on stock pages.</p>
-        </article>
+  <!-- NEWS SECTION -->
+  <section class="section">
+    <h2 class="section-title">Latest Market News</h2>
+    <div id="newsGrid" class="grid news-grid">
+      <!-- Filled dynamically -->
+    </div>
+  </section>
 
-        <section class="market-cards" id="marketCards">
-          <!-- stock mini cards inserted by JS -->
-        </section>
-      </div>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2025 SRJahir Markets — All Rights Reserved</p>
+  </footer>
 
-      <div class="col col-center">
-        <section class="news-grid" id="newsGrid">
-          <!-- news items by JS -->
-        </section>
-      </div>
-
-      <aside class="col col-right">
-        <div class="panel paper-panel">
-          <h4>Top Gainers</h4>
-          <ol id="gainersList"></ol>
-        </div>
-
-        <div class="panel paper-panel">
-          <h4>Top Losers</h4>
-          <ol id="losersList"></ol>
-        </div>
-
-        <div class="panel paper-panel">
-          <h4>Economic Calendar</h4>
-          <ul id="econList">
-            <li>Fed Minutes — Thu</li>
-            <li>CPI (US) — Fri</li>
-            <li>GDP (UK) — Mon</li>
-          </ul>
-        </div>
-      </aside>
-    </main>
-
-    <footer class="footer">
-      <div>© SRJahir Markets — Financial Edition</div>
-      <div id="foot-date"></div>
-    </footer>
-  </div>
-
-  <script src="animation.js"></script>
-  <script src="script.js"></script>
 </body>
 </html>
