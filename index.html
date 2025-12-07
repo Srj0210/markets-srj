@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SRJahir Markets — Global Trading Dashboard</title>
-  <meta name="description" content="SRJahir Markets — Live stock prices, indices, news, charts and global market dashboard." />
+
+  <meta name="description" content="SRJahir Markets — Live stock prices, indices, watchlist, news, and global market insights." />
 
   <link rel="stylesheet" href="styles.css" />
   <script src="animation.js" defer></script>
@@ -12,7 +13,8 @@
 </head>
 
 <body class="dark">
-  <!-- NAVBAR -->
+
+  <!-- NAVIGATION -->
   <header class="navbar">
     <div class="nav-left">
       <img src="logo.png" id="logo" class="logo" />
@@ -20,50 +22,41 @@
     </div>
 
     <div class="nav-center">
-      <input id="searchInput" class="search" placeholder="Search stock — AAPL, TSLA, META..." />
-      <button id="searchBtn" class="btn search-btn">Search</button>
+      <input id="searchInput" class="search" placeholder="Search stock — AAPL, TSLA, BMW.DE..." />
+      <button id="searchBtn" class="btn">Search</button>
     </div>
 
     <div class="nav-right">
-      <a href="#" id="watchlistBtn" class="btn ghost">Watchlist ⭐</a>
+      <button class="btn ghost" onclick="window.location='#watchlistContainer'">⭐ Watchlist</button>
     </div>
   </header>
 
-  <!-- MARKET OVERVIEW -->
+  <!-- GLOBAL INDICES -->
   <section class="section">
-    <h2 class="section-title">Global Market Overview</h2>
-    <div id="indicesGrid" class="grid indices-grid">
-      <!-- Filled dynamically -->
-    </div>
+    <h2 class="section-title">🌍 Global Market Overview</h2>
+    <div id="indicesGrid" class="grid indices-grid"></div>
   </section>
 
-  <!-- TRENDING STOCKS -->
+  <!-- TRENDING -->
   <section class="section">
-    <h2 class="section-title">Trending Stocks</h2>
-    <div id="trendingGrid" class="grid trending-grid">
-      <!-- Filled dynamically -->
-    </div>
+    <h2 class="section-title">🔥 Trending Stocks</h2>
+    <div id="trendingGrid" class="grid trending-grid"></div>
   </section>
 
   <!-- WATCHLIST -->
   <section class="section">
-    <h2 class="section-title">Your Watchlist</h2>
-    <div id="watchlistContainer" class="grid watchlist-grid">
-      <!-- Filled dynamically -->
-    </div>
+    <h2 class="section-title">⭐ Your Watchlist</h2>
+    <div id="watchlistContainer" class="grid watchlist-grid"></div>
   </section>
 
-  <!-- NEWS SECTION -->
+  <!-- NEWS -->
   <section class="section">
-    <h2 class="section-title">Latest Market News</h2>
-    <div id="newsGrid" class="grid news-grid">
-      <!-- Filled dynamically -->
-    </div>
+    <h2 class="section-title">📰 Latest Market News</h2>
+    <div id="newsGrid" class="grid news-grid"></div>
   </section>
 
-  <!-- FOOTER -->
   <footer class="footer">
-    <p>© 2025 SRJahir Markets — All Rights Reserved</p>
+    © 2025 SRJahir Markets — All Rights Reserved
   </footer>
 
 </body>
