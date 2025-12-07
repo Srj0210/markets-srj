@@ -21,21 +21,79 @@ function fmt(n) {
     return Number(n).toLocaleString("en-US");
 }
 
-/* ---------- SEARCH ---------- */
+/* =====================================================
+   🔥 TASK 1 — GLOBAL SEARCH FIX (Auto Exchange Detection)
+   ===================================================== */
+
+/* ---- Search API (Finnhub-style symbol lookup) ---- */
+async function searchSymbol(query) {
+    try {
+        const res = await fetch(`${API}/search?query=${encodeURIComponent(query)}`);
+        const data = await res.json();
+
+        if (!data || !data.result || data.result.length === 0) {
+            return null;
+        }
+
+        // Rank best matches
+        const results = data.result.sort((a, b) => {
+            const rankA =
+                (a.symbol.includes("NYSE") || a.symbol.includes("NASDAQ")) ? 0 :
+                (a.description.toLowerCase().includes(query.toLowerCase()) ? 1 : 2);
+
+            const rankB =
+                (b.symbol.includes("NYSE") || b.symbol.includes("NASDAQ")) ? 0 :
+                (b.description.toLowerCase().includes(query.toLowerCase()) ? 1 : 2);
+
+            return rankA - rankB;
+        });
+
+        return results[0]; // return best match
+    } catch (e) {
+        console.error("Search failed:", e);
+        return null;
+    }
+}
+
+/* ---- Smart Search Redirect ---- */
+async function doSearch(query) {
+    if (!query) {
+        alert("Type stock name or symbol");
+        return;
+    }
+
+    const match = await searchSymbol(query);
+
+    if (!match) {
+        alert(`No stock found for "${query}". Try symbols like AAPL, TSLA, BMW.DE`);
+        return;
+    }
+
+    const symbol = match.symbol;
+
+    // Final safety check
+    if (!symbol || symbol.trim() === "" || symbol === "0") {
+        alert("Symbol not supported or malformed.");
+        return;
+    }
+
+    // Redirect to stock page with correct symbol
+    window.location = `stock.html?symbol=${encodeURIComponent(symbol)}`;
+}
+
+/* ---- Bind Search Input ---- */
 function bindSearch() {
     const input = qs("#searchInput");
     const btn = qs("#searchBtn");
 
-    btn.onclick = () => goSearch(input.value.trim());
+    btn.onclick = () => doSearch(input.value.trim());
     input.addEventListener("keydown", e => {
-        if (e.key === "Enter") goSearch(input.value.trim());
+        if (e.key === "Enter") doSearch(input.value.trim());
     });
 }
 
-function goSearch(q) {
-    if (!q) return alert("Enter stock symbol");
-    window.location = `stock.html?symbol=${q.toUpperCase()}`;
-}
+/* ===================================================== */
+
 
 /* ---------- WATCHLIST ---------- */
 const WATCH_KEY = "srj_watchlist_v2";
@@ -153,7 +211,7 @@ async function renderIndices() {
     grid.innerHTML = html;
 }
 
-/* ---------- TRENDING STOCKS ---------- */
+/* ---------- TRENDING ---------- */
 const TRENDING = ["AAPL", "MSFT", "TSLA", "META", "AMZN", "NVDA"];
 
 async function renderTrending() {
@@ -164,7 +222,6 @@ async function renderTrending() {
 
     for (const s of TRENDING) {
         const q = await getQuote(s);
-        const candles = await getSparkline(s);
 
         let change = 0;
         if (q && q.c && q.pc) {
@@ -188,7 +245,7 @@ function openStock(sym) {
     window.location = `stock.html?symbol=${sym}`;
 }
 
-/* ---------- WATCHLIST RENDER ---------- */
+/* ---------- WATCHLIST ---------- */
 
 async function renderWatchlist() {
     const grid = qs("#watchlistContainer");
@@ -204,6 +261,7 @@ async function renderWatchlist() {
     for (const s of list) {
         const q = await getQuote(s);
         let change = 0;
+
         if (q && q.c && q.pc) {
             change = ((q.c - q.pc) / q.pc) * 100;
         }
@@ -213,7 +271,7 @@ async function renderWatchlist() {
         html += `
         <div class="tile watch-tile">
             <div class="trending-symbol">${s}</div>
-            <div class="trending-price">${fmt(q.c)}</div>
+            <div class="trending-price">${fmt(q?.c)}</div>
             <div class="${cls}">${change.toFixed(2)}%</div>
 
             <button class="remove-btn" onclick="removeWatch('${s}')">Remove</button>
@@ -224,6 +282,7 @@ async function renderWatchlist() {
 }
 
 /* ---------- NEWS ---------- */
+
 async function renderNews() {
     const grid = qs("#newsGrid");
     grid.innerHTML = "<div>Loading news...</div>";
@@ -244,10 +303,10 @@ async function renderNews() {
     `).join("");
 }
 
-/* ---------- MAIN INIT ---------- */
+/* ---------- INITIALIZE PAGE ---------- */
 
 window.addEventListener("DOMContentLoaded", async () => {
-    bindSearch();
+    bindSearch();            // Updated smart global search
     renderIndices();
     renderTrending();
     renderWatchlist();
