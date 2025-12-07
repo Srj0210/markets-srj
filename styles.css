@@ -1,26 +1,25 @@
-/* ================================================
-   SRJahir Markets — PREMIUM DARK TRADING UI (v1.2)
-   ================================================ */
+/* ===========================================
+   SRJahir Markets — PREMIUM DARK UI (v2.0)
+   =========================================== */
 
 :root {
   --bg: #0b0e15;
-  --panel: rgba(255, 255, 255, 0.05);
-  --panel-hover: rgba(255, 255, 255, 0.10);
-  --glass: rgba(255, 255, 255, 0.08);
+  --panel: rgba(255,255,255,0.05);
+  --panel-hover: rgba(255,255,255,0.10);
+  --glass: rgba(255,255,255,0.10);
 
   --text: #e6e6e6;
-  --text-muted: #9a9a9a;
+  --text-muted: #969696;
 
   --green: #25d97a;
   --red: #ff4b4b;
   --blue: #4da3ff;
 
-  --border: rgba(255,255,255,0.14);
+  --border: rgba(255,255,255,0.15);
   --radius: 16px;
   --shadow: 0 10px 25px rgba(0,0,0,0.45);
 }
 
-/* Reset */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -33,12 +32,12 @@ body.dark {
   color: var(--text);
 }
 
-/* ============================
-       NAVIGATION BAR
-   ============================ */
+/* ----------------------------------
+   NAVBAR (H1 - Premium Compact)
+   ---------------------------------- */
 .navbar {
   width: 100%;
-  padding: 18px 30px;
+  padding: 14px 28px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -54,77 +53,112 @@ body.dark {
 .nav-left {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
 }
 
 .logo {
-  height: 75px;
+  height: 65px;     /* USER CHOICE = C */
   transition: 0.3s ease;
 }
-
 .logo:hover {
-  transform: scale(1.10);
+  transform: scale(1.05);
 }
 
 .brand {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 600;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
 
-/* SEARCH BAR */
-.nav-center {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+/* ----------------------------------
+   SEARCH BAR + SUGGESTIONS (S1)
+   ---------------------------------- */
+
+.search-wrapper {
+  position: relative;
+  width: 380px;
 }
 
 .search {
-  padding: 12px 14px;
-  width: 320px;
+  padding: 12px 16px;
+  width: 100%;
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-
   color: var(--text);
-  transition: 0.25s ease;
 }
-
 .search:focus {
   outline: none;
   border-color: var(--blue);
 }
 
-/* BUTTONS */
+/* S1 TradingView-style suggestions */
+.suggest-box {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 100%;
+
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+
+  backdrop-filter: blur(20px);
+  display: none;
+}
+
+.s-item {
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.s-item:hover {
+  background: var(--panel-hover);
+}
+
+.s-logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+.s-symbol {
+  font-weight: 600;
+  font-size: 15px;
+}
+.s-name {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Buttons */
 .btn {
   padding: 12px 16px;
   border-radius: var(--radius);
   border: none;
   cursor: pointer;
-
   background: var(--blue);
   color: white;
   font-weight: 500;
-  transition: 0.25s ease;
+  transition: 0.25s;
 }
-
-.btn:hover {
-  background: #63b3ff;
-}
+.btn:hover { background: #63b3ff; }
 
 .ghost {
   background: transparent;
   border: 1px solid var(--border);
   color: var(--text-muted);
 }
+.ghost:hover { background: var(--panel-hover); }
 
-.ghost:hover {
-  background: var(--panel-hover);
-}
+/* ----------------------------------
+   GRID / LAYOUT
+   ---------------------------------- */
 
-/* ============================
-          LAYOUT
-   ============================ */
 .section {
   width: 90%;
   max-width: 1300px;
@@ -133,185 +167,68 @@ body.dark {
 
 .section-title {
   font-size: 22px;
-  font-weight: 600;
   margin-bottom: 18px;
 }
 
-/* ============================
-         GRID SYSTEM
-   ============================ */
 .grid {
   display: grid;
   gap: 18px;
 }
 
-.indices-grid {
-  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-}
+.indices-grid      { grid-template-columns: repeat(auto-fit, minmax(170px,1fr)); }
+.trending-grid     { grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); }
+.watchlist-grid    { grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); }
+.news-grid         { grid-template-columns: repeat(auto-fit, minmax(320px,1fr)); }
 
-.trending-grid {
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-}
+/* ----------------------------------
+   TILES
+   ---------------------------------- */
 
-.watchlist-grid {
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-}
-
-.news-grid {
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-}
-
-/* ============================
-            TILES
-   ============================ */
 .tile {
-  padding: 20px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-
-  transition: 0.3s ease;
-}
-
-.tile:hover {
-  background: var(--panel-hover);
-  transform: translateY(-3px);
-}
-
-/* INDEX TILE */
-.index-name {
-  font-size: 15px;
-  color: var(--text-muted);
-}
-
-.index-price {
-  font-size: 22px;
-  margin-top: 8px;
-  font-weight: 600;
-}
-
-.index-change {
-  margin-top: 6px;
-  font-size: 15px;
-  font-weight: 600;
-}
-
-.pos {
-  color: var(--green);
-}
-
-.neg {
-  color: var(--red);
-}
-
-/* TRENDING STOCK TILE */
-.trending-symbol {
-  font-size: 20px;
-  font-weight: 600;
-}
-
-.trending-price {
-  margin-top: 6px;
-  font-size: 22px;
-  font-weight: 600;
-}
-
-.sparkline {
-  margin-top: 12px;
-  height: 50px;
-  background: var(--glass);
-  border-radius: var(--radius);
-}
-
-/* WATCHLIST */
-.watch-tile {
-  position: relative;
-  padding: 20px;
-}
-
-.remove-btn {
-  margin-top: 14px;
-  padding: 8px 12px;
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text-muted);
-  border-radius: var(--radius);
-  cursor: pointer;
-}
-
-.remove-btn:hover {
-  background: var(--panel-hover);
-}
-
-/* ============================
-         NEWS CARDS
-   ============================ */
-.news-card {
   padding: 18px;
   background: var(--panel);
-  border-radius: var(--radius);
   border: 1px solid var(--border);
+  border-radius: var(--radius);
   box-shadow: var(--shadow);
   transition: 0.25s ease;
 }
-
-.news-card:hover {
-  background: var(--panel-hover);
+.tile:hover {
   transform: translateY(-3px);
+  background: var(--panel-hover);
 }
 
-.news-title {
-  font-size: 18px;
-  font-weight: 600;
-}
+/* Index */
+.index-price   { margin-top: 6px; font-size: 22px; font-weight: 600; }
+.index-change  { margin-top: 6px; font-weight: 600; }
+.pos           { color: var(--green); }
+.neg           { color: var(--red); }
 
-.news-time {
-  margin-top: 6px;
-  color: var(--text-muted);
-  font-size: 13px;
-}
+/* Trending */
+.trending-symbol { font-size: 20px; font-weight: 600; }
+.trending-price  { margin-top: 6px; font-size: 22px; font-weight: 600; }
 
-.news-desc {
-  margin-top: 8px;
-  color: var(--text-muted);
-  font-size: 15px;
-}
+/* News */
+.news-card { padding: 18px; border-radius: var(--radius); background: var(--panel); }
+.news-card:hover { background: var(--panel-hover); transform: translateY(-3px); }
+.news-title { font-size: 17px; font-weight: 600; }
+.news-time  { margin-top: 4px; font-size: 13px; color: var(--text-muted); }
+.news-desc  { margin-top: 8px; font-size: 14px; color: var(--text-muted); }
 
-.news-readmore {
-  display: inline-block;
-  margin-top: 10px;
-  font-size: 14px;
-  color: var(--blue);
-}
-
-/* ============================
-             FOOTER
-   ============================ */
+/* Footer */
 .footer {
-  text-align: center;
-  padding: 26px;
   margin-top: 40px;
-
-  border-top: 1px solid var(--border);
+  padding: 25px;
+  text-align: center;
   color: var(--text-muted);
+  border-top: 1px solid var(--border);
 }
 
-/* ============================
-          RESPONSIVE
-   ============================ */
+/* Mobile */
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
-    gap: 16px;
+    gap: 14px;
     padding: 20px;
   }
-
-  .search {
-    width: 95%;
-  }
-
-  .brand {
-    font-size: 20px;
-  }
+  .search-wrapper { width: 100%; }
 }
