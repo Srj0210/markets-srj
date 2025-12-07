@@ -1,0 +1,103 @@
+/* ---- Modern Financial Newspaper Theme (Ivory paper) ---- */
+:root{
+  --paper-bg:#F5F1E8;
+  --ink:#111111;
+  --muted:#7a7a7a;
+  --gold:#D4A937;
+  --blue:#1A245A;
+  --panel-bg: rgba(255,255,255,0.6);
+  --glass: rgba(255,255,255,0.5);
+  --max-width:1100px;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family: 'Georgia', 'Times New Roman', serif;background:var(--paper-bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.45}
+#page{max-width:1200px;margin:18px auto;padding:18px}
+
+/* Masthead */
+.masthead{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-bottom:1px solid rgba(0,0,0,0.06)}
+.masthead.small{padding:8px 12px}
+.mast-left img{height:54px}
+.paper-title{font-size:28px;letter-spacing:2px;margin:0;color:var(--blue)}
+.tagline{font-size:12px;color:var(--muted)}
+.edition-date{font-size:12px;color:var(--muted)}
+.theme-toggle{border:1px solid rgba(0,0,0,0.08);background:transparent;padding:6px 8px;border-radius:6px;cursor:pointer}
+
+/* Breaking bar */
+.breaking-bar{display:flex;align-items:center;margin-top:12px;border-top:4px solid var(--gold);padding:8px 0;background:linear-gradient(180deg, rgba(212,169,55,0.06), transparent)}
+.breaking-label{font-weight:700;padding:0 12px;background:var(--gold);color:#111;padding:6px 10px;border-radius:2px;margin-right:12px}
+.breaking-ticker{flex:1;white-space:nowrap;overflow:hidden;font-weight:600;}
+
+/* Hero */
+.hero{display:flex;gap:18px;margin-top:18px}
+.hero-left{flex:1}
+.hero-right{width:360px}
+.hero-left h2{font-size:28px;margin:6px 0 12px}
+.hero-left p{color:var(--muted);margin-top:0}
+.hero-search{display:flex;gap:8px;margin-top:12px}
+.hero-search input{flex:1;padding:10px;border:1px solid rgba(0,0,0,0.08);font-size:14px}
+.btn-primary{background:var(--blue);color:white;border:none;padding:10px 14px;border-radius:6px;cursor:pointer}
+.btn-ghost{background:transparent;border:1px solid rgba(0,0,0,0.06);padding:8px 12px;border-radius:6px;cursor:pointer}
+.cta-row{margin-top:12px;display:flex;gap:8px}
+
+/* Panels and paper look */
+.paper-panel{background:linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.5));padding:12px;border-radius:6px;border:1px solid rgba(0,0,0,0.04);box-shadow: 0 6px 18px rgba(0,0,0,0.03)}
+.indices-table{width:100%;border-collapse:collapse;margin-top:10px}
+.indices-table th,.indices-table td{padding:6px 4px;text-align:left;font-size:14px;border-bottom:1px solid rgba(0,0,0,0.04)}
+
+/* Layout */
+.content{display:grid;grid-template-columns: 1fr 1fr 320px;gap:18px;margin-top:18px}
+.col{min-height:200px}
+.lead-article{padding:18px}
+.article-title{font-size:20px;margin:0 0 8px}
+.market-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.market-card{padding:12px;border-bottom:1px dashed rgba(0,0,0,0.06)}
+.news-grid{display:flex;flex-direction:column;gap:12px}
+.news-item{display:flex;gap:12px;border-bottom:1px dashed rgba(0,0,0,0.06);padding-bottom:10px}
+.news-item h4{margin:0;font-size:16px}
+.panel{margin-bottom:12px}
+
+/* Watchlist styles */
+.watchlist-panel{margin-top:12px}
+#watchlist{list-style:none;padding:0;margin:0}
+#watchlist li{padding:6px 0;border-bottom:1px dashed rgba(0,0,0,0.06);display:flex;justify-content:space-between}
+
+/* Stock page */
+.stock-page{max-width:1100px;margin:18px auto;padding:12px}
+.stock-header{display:flex;justify-content:space-between;align-items:center;padding:18px;margin-bottom:12px}
+.stock-controls{display:flex;flex-direction:column;align-items:flex-end}
+.stock-controls #stockPrice{font-size:24px;font-weight:700}
+
+/* Chart toolbar */
+.chart-toolbar{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.range-btn{padding:6px 8px;border:1px solid rgba(0,0,0,0.06);background:transparent;border-radius:6px}
+.range-btn.active{background:var(--blue);color:white;border-color:var(--blue)}
+.chart-panel{padding:12px}
+
+/* stock-data-grid */
+.stock-data-grid{display:flex;gap:12px;margin-top:12px}
+.fundamentals{flex:1}
+.news-side{width:360px}
+
+/* footer */
+.footer{margin-top:28px;padding-top:12px;border-top:1px solid rgba(0,0,0,0.06);display:flex;justify-content:space-between;color:var(--muted)}
+
+/* responsive */
+@media (max-width:980px){
+  .content{grid-template-columns:1fr;gap:12px}
+  .hero{flex-direction:column}
+  .hero-right{width:100%}
+  .stock-data-grid{flex-direction:column}
+}
+
+/* subtle paper texture using gradients and noise (no image) */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;background-image:
+    linear-gradient(rgba(0,0,0,0.01), rgba(0,0,0,0.01));
+  opacity:0.35;
+  mix-blend-mode:multiply;
+  z-index:0;
+}
+
+/* small helpers */
+.small-muted{color:var(--muted);font-size:13px}
