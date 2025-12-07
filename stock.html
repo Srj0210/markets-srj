@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Stock — SRJahir Markets</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://unpkg.com/lightweight-charts@3.10.0/dist/lightweight-charts.standalone.production.js"></script>
+</head>
+<body>
+  <header class="masthead small">
+    <div class="mast-left">
+      <img src="logo.png" alt="SRJahir Markets" id="logo" />
+    </div>
+    <div class="mast-center">
+      <h1 class="paper-title">SRJahir Markets</h1>
+    </div>
+    <div class="mast-right">
+      <button onclick="window.location='index.html'" class="btn-ghost">Home</button>
+    </div>
+  </header>
+
+  <main class="stock-page">
+    <section class="stock-header paper-panel">
+      <div>
+        <h2 id="stockName">Loading...</h2>
+        <div id="stockSymbol"></div>
+      </div>
+      <div class="stock-controls">
+        <div id="stockPrice">—</div>
+        <button id="addWatch" class="btn-ghost">☆ Watch</button>
+      </div>
+    </section>
+
+    <section class="chart-panel paper-panel">
+      <div class="chart-toolbar">
+        <button data-range="1D" class="range-btn">1D</button>
+        <button data-range="5D" class="range-btn">5D</button>
+        <button data-range="1M" class="range-btn active">1M</button>
+        <button data-range="6M" class="range-btn">6M</button>
+        <button data-range="1Y" class="range-btn">1Y</button>
+        <label class="chart-type">
+          <input type="radio" name="chartType" value="line" checked /> Line
+          <input type="radio" name="chartType" value="candle" /> Candle
+        </label>
+      </div>
+      <div id="chart" style="height:420px;"></div>
+    </section>
+
+    <section class="stock-data-grid">
+      <div class="paper-panel fundamentals">
+        <h4>Fundamentals</h4>
+        <ul id="fundamentalsList"></ul>
+      </div>
+      <div class="paper-panel news-side">
+        <h4>Related News</h4>
+        <ul id="relatedNews"></ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>© SRJahir Markets — Financial Edition</div>
+  </footer>
+
+  <script src="animation.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
