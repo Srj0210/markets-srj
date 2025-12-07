@@ -1,5 +1,5 @@
 /* ============================================
-   SRJahir Markets — Global Search (S1)
+   SRJahir Markets — Working Stable Version
    ============================================ */
 
 const API = "https://autumn-band-75e8.surajmaitra1996.workers.dev";
@@ -7,105 +7,202 @@ const API = "https://autumn-band-75e8.surajmaitra1996.workers.dev";
 const qs  = s => document.querySelector(s);
 const qsa = s => Array.from(document.querySelectorAll(s));
 
-/* ------------------------------
-   FETCH SEARCH RESULTS
-   ------------------------------ */
-async function searchSymbols(q) {
-    if (!q) return [];
-
-    const res = await fetch(`${API}/search?query=${encodeURIComponent(q)}`);
-    const data = await res.json();
-
-    return data.result || [];
+function fmt(n){
+  if(!n && n!==0) return "—";
+  return Number(n).toLocaleString("en-US");
 }
 
-/* ------------------------------
-   SHOW SUGGESTIONS (S1)
-   ------------------------------ */
-function showSuggestions(list) {
-    const box = qs("#suggestBox");
-    box.innerHTML = "";
+/* ----------------------------
+   Search Suggestion (SAFE)
+----------------------------- */
 
-    if (!list.length) {
+async function searchSymbols(q){
+    if(!q) return [];
+    try{
+        const res = await fetch(`${API}/search?query=${q}`);
+        const data = await res.json();
+        return data.result?.slice(0,5) || [];
+    }catch{
+        return [];
+    }
+}
+
+function showSuggest(list){
+    const box = qs("#suggestBox");
+    if(!list.length){
         box.style.display = "none";
         return;
     }
-
     box.style.display = "block";
-
-    list.forEach(item => {
-        const div = document.createElement("div");
-        div.className = "s-item";
-
-        const logo = document.createElement("img");
-        logo.className = "s-logo";
-        logo.src = `https://finnhub.io/api/logo?symbol=${item.symbol}`;
-
-        const info = document.createElement("div");
-        info.innerHTML = `
-            <div class="s-symbol">${item.symbol}</div>
-            <div class="s-name">${item.description}</div>
-        `;
-
-        div.appendChild(logo);
-        div.appendChild(info);
-
-        div.onclick = () => {
-            location.href = `stock.html?symbol=${item.symbol}`;
-        };
-
-        box.appendChild(div);
-    });
+    box.innerHTML = list.map(s => `
+      <div class="s-item" onclick="goStock('${s.symbol}')">
+        <div class="s-symbol">${s.symbol}</div>
+        <div class="s-name">${s.description}</div>
+      </div>
+    `).join("");
 }
 
-/* ------------------------------
-   BIND SEARCH
-   ------------------------------ */
-function bindSearch() {
-    const input = qs("#searchInput");
-    input.addEventListener("input", async () => {
-        const q = input.value.trim();
-        if (!q) return showSuggestions([]);
+function bindSearch(){
+    const i = qs("#searchInput");
 
-        const list = await searchSymbols(q);
-        showSuggestions(list.slice(0, 6));
+    i.addEventListener("input", async () => {
+        const q = i.value.trim();
+        if(!q){ showSuggest([]); return; }
+
+        const data = await searchSymbols(q);
+        showSuggest(data);
     });
 
-    // Close on click outside
     document.addEventListener("click", e => {
-        if (!qs(".search-wrapper").contains(e.target)) {
+        if(!qs(".search-wrapper").contains(e.target)){
             qs("#suggestBox").style.display = "none";
         }
     });
 }
 
-/* ------------------------------
-   LIVE DATA RENDERERS (unchanged)
-   ------------------------------ */
-
-/* utilities */
-function fmt(n){return Number(n).toLocaleString("en-US")}
-
-/* WATCHLIST */
-const WATCH_KEY = "srj_watchlist_v2";
-function getWatchlist(){return JSON.parse(localStorage.getItem(WATCH_KEY)||"[]")}
-function saveWatchlist(a){localStorage.setItem(WATCH_KEY,JSON.stringify(a))}
-function removeWatch(s){let l=getWatchlist().filter(x=>x!==s);saveWatchlist(l);renderWatchlist()}
-
-/* Quote fetcher */
-async function getQuote(sym){
-    try{
-        const r=await fetch(`${API}/quote?symbol=${sym}`);
-        return await r.json();
-    }catch{return null}
+function goStock(sym){
+    location.href = `stock.html?symbol=${sym}`;
 }
 
-/* Many render functions (indices, trending, watchlist, news) SAME AS BEFORE */
+/* ----------------------------
+   INDICES
+----------------------------- */
 
-/* ------------------------------
-   INITIALIZE PAGE
-   ------------------------------ */
-window.addEventListener("DOMContentLoaded", () => {
+const INDICES = [
+  {name:"S&P 500", sym:"SPY"},
+  {name:"NASDAQ", sym:"QQQ"},
+  {name:"Dow Jones", sym:"DIA"},
+  {name:"Nifty 50", sym:"^NSEI"},
+  {name:"Sensex", sym:"^BSESN"},
+  {name:"FTSE 100", sym:"^FTSE"}
+];
+
+async function getQuote(symbol){
+    try{
+        const r = await fetch(`${API}/quote?symbol=${symbol}`);
+        return await r.json();
+    }catch{
+        return null;
+    }
+}
+
+async function renderIndices(){
+    const g = qs("#indicesGrid");
+    let html = "";
+
+    for(const i of INDICES){
+        const q = await getQuote(i.sym);
+        if(!q || !q.c){
+            html += `
+              <div class="tile">
+                <div>${i.name}</div>
+                <div>—</div>
+                <div>—</div>
+              </div>`;
+            continue;
+        }
+
+        const ch = ((q.c - q.pc)/q.pc)*100;
+        html += `
+          <div class="tile">
+            <div>${i.name}</div>
+            <div>${fmt(q.c)}</div>
+            <div class="${ch>=0?'pos':'neg'}">${ch.toFixed(2)}%</div>
+          </div>`;
+    }
+
+    g.innerHTML = html;
+}
+
+/* ----------------------------
+   TRENDING
+----------------------------- */
+
+const TRENDING = ["AAPL","MSFT","TSLA","META","AMZN","NVDA"];
+
+async function renderTrending(){
+    const g = qs("#trendingGrid");
+    let html = "";
+
+    for(const s of TRENDING){
+        const q = await getQuote(s);
+        const ch = q && q.pc ? ((q.c-q.pc)/q.pc)*100 : 0;
+
+        html += `
+          <div class="tile" onclick="goStock('${s}')">
+            <div>${s}</div>
+            <div>${fmt(q?.c)}</div>
+            <div class="${ch>=0?'pos':'neg'}">${ch.toFixed(2)}%</div>
+          </div>`;
+    }
+
+    g.innerHTML = html;
+}
+
+/* ----------------------------
+   WATCHLIST
+----------------------------- */
+
+const WATCH_KEY = "srj_watchlist_v2";
+function getWatch(){return JSON.parse(localStorage.getItem(WATCH_KEY)||"[]")}
+function saveWatch(a){localStorage.setItem(WATCH_KEY,JSON.stringify(a))}
+function removeWatch(s){
+    saveWatch(getWatch().filter(x=>x!==s));
+    renderWatchlist();
+}
+
+async function renderWatchlist(){
+    const g = qs("#watchlistContainer");
+    const list = getWatch();
+
+    if(list.length===0){
+        g.innerHTML = `<div class="tile">Nothing in watchlist</div>`;
+        return;
+    }
+
+    let html = "";
+    for(const s of list){
+        const q = await getQuote(s);
+        const ch = q && q.pc ? ((q.c-q.pc)/q.pc)*100 : 0;
+
+        html += `
+          <div class="tile">
+            <div>${s}</div>
+            <div>${fmt(q?.c)}</div>
+            <div class="${ch>=0?'pos':'neg'}">${ch.toFixed(2)}%</div>
+            <button class="remove-btn" onclick="removeWatch('${s}')">Remove</button>
+          </div>`;
+    }
+
+    g.innerHTML = html;
+}
+
+/* ----------------------------
+   NEWS
+----------------------------- */
+
+async function renderNews(){
+    try{
+        const r = await fetch(`${API}/news?symbol=AAPL`);
+        const data = await r.json();
+
+        qs("#newsGrid").innerHTML = data.slice(0,10).map(n=>`
+          <div class="news-card">
+            <div class="news-title">${n.headline}</div>
+            <div class="news-desc">${n.summary.slice(0,120)}...</div>
+          </div>
+        `).join("");
+
+    }catch{
+        qs("#newsGrid").innerHTML = "News unavailable";
+    }
+}
+
+/* ----------------------------
+   INIT
+----------------------------- */
+
+window.addEventListener("DOMContentLoaded",()=>{
     bindSearch();
     renderIndices();
     renderTrending();
