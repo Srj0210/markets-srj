@@ -3,62 +3,140 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SRJahir Markets — Global Trading Dashboard</title>
-
+  <title>SRJahir Markets — US Stock Market Live Prices, Charts & News</title>
+  <meta name="description" content="Track US stock market live prices, charts, and breaking financial news. Follow S&P 500, NASDAQ, Dow Jones, and top stocks like AAPL, TSLA, NVDA in real-time." />
+  <meta name="keywords" content="stock market, US stocks, S&P 500, NASDAQ, Dow Jones, live stock prices, stock market today, AAPL, TSLA, NVDA" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://stocks.srjahir.in/" />
+  <meta property="og:title" content="SRJahir Markets — US Stock Market Dashboard" />
+  <meta property="og:description" content="Live US stock prices, charts, and market news." />
+  <meta property="og:url" content="https://stocks.srjahir.in/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://stocks.srjahir.in/logo.png" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebSite","name":"SRJahir Markets","url":"https://stocks.srjahir.in/","description":"Live US stock market dashboard with real-time prices, charts, and financial news.","publisher":{"@type":"Organization","name":"SRJahir Tech","url":"https://srjahir.in"}}
+  </script>
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
-  <script src="animation.js" defer></script>
-  <script src="script.js" defer></script>
+  <!-- AdSense: uncomment after approval -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXX" crossorigin="anonymous"></script> -->
 </head>
-
 <body class="dark">
-
-  <!-- NAVBAR -->
   <header class="navbar">
     <div class="nav-left">
-      <img src="logo.png" class="logo" onclick="window.location='index.html'"/>
+      <img src="logo.png" class="logo" alt="SRJahir Markets" onclick="location.href='/'" />
       <h1 class="brand">SRJahir Markets</h1>
     </div>
-
     <div class="nav-center">
       <div class="search-wrapper">
-        <input id="searchInput" class="search" placeholder="Search stocks globally — AAPL, TSLA, BMW.DE, RELIANCE.NS" />
+        <input id="searchInput" class="search" placeholder="Search stocks — AAPL, TSLA, NVDA..." aria-label="Search stocks" />
         <div id="suggestBox" class="suggest-box"></div>
       </div>
     </div>
-
-    <div class="nav-right">
-      <button onclick="window.location='index.html#watchlist'" class="btn ghost watch-btn">⭐ Watchlist</button>
-    </div>
+    <nav class="nav-right">
+      <a href="blog.html" class="btn ghost nav-link">Blog</a>
+      <a href="tools/profit-loss-calculator.html" class="btn ghost nav-link">Tools</a>
+      <a href="markets/crypto.html" class="btn ghost nav-link">Crypto</a>
+      <a href="#watchlist" class="btn ghost watch-btn">⭐ Watchlist</a>
+    </nav>
   </header>
 
+  <div class="market-status-bar">
+    <span id="marketStatus">⏳ Loading...</span>
+    <span id="lastUpdate" class="last-update"></span>
+  </div>
 
-  <!-- MARKET OVERVIEW -->
+  <!-- AD TOP -->
+  <div class="ad-slot" id="ad-top"></div>
+
   <section class="section">
-    <h2 class="section-title">Global Market Overview</h2>
+    <h2 class="section-title">US Market Overview</h2>
+    <p class="section-desc">Real-time US market indices. Auto-refreshes every 30 seconds during market hours.</p>
     <div id="indicesGrid" class="grid indices-grid"></div>
   </section>
 
-  <!-- TRENDING -->
   <section class="section">
     <h2 class="section-title">Trending Stocks</h2>
+    <p class="section-desc">Most actively watched US stocks today.</p>
     <div id="trendingGrid" class="grid trending-grid"></div>
   </section>
 
-  <!-- WATCHLIST -->
+  <!-- AD MID -->
+  <div class="ad-slot" id="ad-mid"></div>
+
+  <section class="section">
+    <div class="grid dual-grid">
+      <div>
+        <h2 class="section-title">📈 Top Gainers</h2>
+        <div id="gainersGrid" class="mini-list"></div>
+      </div>
+      <div>
+        <h2 class="section-title">📉 Top Losers</h2>
+        <div id="losersGrid" class="mini-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Sector Performance</h2>
+    <div id="sectorGrid" class="grid sector-grid"></div>
+  </section>
+
   <section class="section" id="watchlist">
     <h2 class="section-title">Your Watchlist</h2>
     <div id="watchlistContainer" class="grid watchlist-grid"></div>
   </section>
 
-  <!-- NEWS -->
+  <!-- AD BEFORE NEWS -->
+  <div class="ad-slot" id="ad-news"></div>
+
   <section class="section">
     <h2 class="section-title">Latest Market News</h2>
     <div id="newsGrid" class="grid news-grid"></div>
   </section>
 
+  <section class="section">
+    <h2 class="section-title">Market Insights & Analysis</h2>
+    <div class="grid blog-grid" id="blogGrid">
+      <a href="blog/best-sp500-etfs-2026.html" class="blog-card"><h3>Best S&P 500 ETFs to Buy in 2026</h3><p>Compare top S&P 500 ETFs by expense ratio, returns, and holdings.</p><span class="blog-date">April 2026</span></a>
+      <a href="blog/nvidia-vs-amd-stock.html" class="blog-card"><h3>NVIDIA vs AMD: Which AI Stock is Better?</h3><p>Deep comparison of NVIDIA and AMD fundamentals and growth potential.</p><span class="blog-date">April 2026</span></a>
+      <a href="blog/how-to-read-stock-charts.html" class="blog-card"><h3>How to Read Stock Charts: Beginner Guide</h3><p>Learn candlestick patterns, support/resistance, and volume analysis.</p><span class="blog-date">April 2026</span></a>
+      <a href="blog/top-dividend-stocks-2026.html" class="blog-card"><h3>Top 10 Dividend Stocks for Passive Income</h3><p>High-yield dividend stocks that grow payouts year after year.</p><span class="blog-date">April 2026</span></a>
+    </div>
+    <div style="text-align:center;margin-top:20px"><a href="blog.html" class="btn ghost">View All Articles →</a></div>
+  </section>
+
+  <section class="section seo-content">
+    <h2>About SRJahir Markets</h2>
+    <p>SRJahir Markets is a free, real-time US stock market tracking platform by <a href="https://srjahir.in">SRJahir Tech</a>. Track live prices for S&P 500, NASDAQ, Dow Jones, and individual stocks like Apple (AAPL), Tesla (TSLA), NVIDIA (NVDA), Microsoft (MSFT), Amazon (AMZN), and Meta (META). Features include interactive charts, personal watchlist, top gainers/losers, sector performance, and curated financial news.</p>
+  </section>
+
   <footer class="footer">
-    <p>© 2025 SRJahir Markets — All Rights Reserved</p>
+    <div class="footer-links">
+      <a href="pages/about.html">About</a>
+      <a href="pages/contact.html">Contact</a>
+      <a href="pages/privacy.html">Privacy Policy</a>
+      <a href="pages/terms.html">Terms of Use</a>
+      <a href="pages/disclaimer.html">Disclaimer</a>
+      <a href="blog.html">Blog</a>
+      <a href="pages/market-holidays.html">Market Holidays</a>
+      <a href="pages/market-hours.html">Market Hours</a>
+      <a href="pages/economic-calendar.html">Economic Calendar</a>
+      <a href="pages/fear-greed-index.html">Fear & Greed</a>
+      <a href="markets/crypto.html">Crypto</a>
+      <a href="markets/forex.html">Forex</a>
+      <a href="markets/commodities.html">Commodities</a>
+      <a href="markets/global-indices.html">Global Markets</a>
+      <a href="tools/profit-loss-calculator.html">Calculators</a>
+      <a href="tools/stock-compare.html">Compare Stocks</a>
+      <a href="sitemap.xml">Sitemap</a>
+    </div>
+    <p class="footer-copy">© 2026 <a href="https://srjahir.in">SRJahir Tech</a> — stocks.srjahir.in</p>
+    <p class="footer-disc">Market data by Finnhub. Prices may be delayed. Not financial advice.</p>
   </footer>
 
+  <script src="script.js" defer></script>
 </body>
 </html>
