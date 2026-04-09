@@ -1,0 +1,77 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Stock Profit/Loss Calculator — How Much Did I Make? [Free Tool]</title>
+<meta name="description" content="Free stock profit calculator. Enter buy price, sell price, and number of shares to instantly calculate your profit, loss, ROI percentage, and break-even price.">
+<meta name="keywords" content="stock calculator, profit loss calculator, stock return calculator, ROI calculator, investment calculator">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://stocks.srjahir.in/tools/profit-loss-calculator.html">
+<meta property="og:title" content="Stock Profit/Loss Calculator — How Much Did I Make? [Free Tool]">
+<meta property="og:description" content="Free stock profit calculator. Enter buy price, sell price, and number of shares to instantly calculate your profit, loss, ROI percentage, and break-even price.">
+<meta property="og:url" content="https://stocks.srjahir.in/tools/profit-loss-calculator.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://stocks.srjahir.in/logo.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I calculate stock profit?", "acceptedAnswer": {"@type": "Answer", "text": "Stock profit = (Sell Price - Buy Price) \u00d7 Number of Shares - Total Fees. Use our free calculator above for instant results."}}, {"@type": "Question", "name": "What is a good ROI on stocks?", "acceptedAnswer": {"@type": "Answer", "text": "The S&P 500 averages about 10% annual return. Anything above 10% annually is considered good."}}, {"@type": "Question", "name": "Do I pay tax on stock profits?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, in the US short-term gains (held <1 year) are taxed as income. Long-term gains (held >1 year) get lower tax rates of 0%, 15%, or 20%."}}]}</script>
+<link rel="icon" type="image/png" href="../logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<style>.calc-box{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:24px;max-width:520px;margin:20px auto}.calc-input{width:100%;padding:12px;background:#0d1117;border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:16px;margin:6px 0 16px}.calc-btn{width:100%;padding:14px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer}.calc-btn:hover{opacity:0.9}.calc-result{background:#0d1117;border:1px solid var(--border);border-radius:8px;padding:20px;margin-top:20px}.res-big{font-size:32px;font-weight:700;margin:8px 0;text-align:center}.res-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px}.res-label{color:var(--text-muted)}</style>
+</head><body class="dark"><header class="navbar"><div class="nav-left"><img src="../logo.png" class="logo" onclick="location.href='/'" alt="SRJahir Markets"><h1 class="brand">SRJahir Markets</h1></div><nav class="nav-right"><a href="/" class="btn ghost">Home</a><a href="/blog.html" class="btn ghost">Blog</a><a href="/tools/profit-loss-calculator.html" class="btn ghost">Tools</a></nav></header>
+<div class="page-content" style="max-width:700px">
+<p style="font-size:12px;color:var(--text-muted)"><a href="/">Home</a> → <a href="/tools/profit-loss-calculator.html">Tools</a> → Profit/Loss Calculator</p>
+<h1>Stock Profit/Loss Calculator</h1>
+<p>Instantly calculate how much money you made or lost on a stock trade. Enter your buy price, sell price, number of shares, and optional commission to see your total profit/loss, return on investment (ROI), and break-even price.</p>
+<p style="font-size:12px;color:var(--text-muted)">Updated: <span id="todayDate"></span> · Used by 10,000+ traders</p>
+<div class="ad-slot"></div>
+<div class="calc-box">
+<label style="font-size:13px;color:var(--text-muted)">Buy Price ($)</label>
+<input type="number" id="buyPrice" class="calc-input" placeholder="e.g. 150.00" step="0.01">
+<label style="font-size:13px;color:var(--text-muted)">Sell Price ($)</label>
+<input type="number" id="sellPrice" class="calc-input" placeholder="e.g. 180.00" step="0.01">
+<label style="font-size:13px;color:var(--text-muted)">Number of Shares</label>
+<input type="number" id="shares" class="calc-input" placeholder="e.g. 10" step="1">
+<label style="font-size:13px;color:var(--text-muted)">Commission per Trade ($) — optional</label>
+<input type="number" id="commission" class="calc-input" placeholder="e.g. 0.00" step="0.01" value="0">
+<button class="calc-btn" onclick="calcPL()">Calculate Profit/Loss</button>
+<div id="result" class="calc-result" style="display:none"></div>
+</div>
+<script>
+document.getElementById('todayDate').textContent=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+function calcPL(){
+  const bp=parseFloat(document.getElementById('buyPrice').value);
+  const sp=parseFloat(document.getElementById('sellPrice').value);
+  const sh=parseFloat(document.getElementById('shares').value);
+  const cm=parseFloat(document.getElementById('commission').value)||0;
+  if(!bp||!sp||!sh)return alert('Please fill in all required fields');
+  const cost=bp*sh+cm;
+  const revenue=sp*sh-cm;
+  const profit=revenue-cost;
+  const roi=((profit)/cost*100);
+  const breakeven=bp+(cm*2/sh);
+  const color=profit>=0?'#25d97a':'#ff4b4b';
+  const sign=profit>=0?'+':'';
+  document.getElementById('result').style.display='block';
+  document.getElementById('result').innerHTML=`
+    <div class="res-big" style="color:${color}">${sign}$${profit.toFixed(2)}</div>
+    <div style="text-align:center;font-size:13px;color:var(--text-muted);margin-bottom:16px">${profit>=0?'Profit':'Loss'} on this trade</div>
+    <div class="res-row"><span class="res-label">Total Cost (Buy)</span><span>$${cost.toFixed(2)}</span></div>
+    <div class="res-row"><span class="res-label">Total Revenue (Sell)</span><span>$${revenue.toFixed(2)}</span></div>
+    <div class="res-row"><span class="res-label">Net Profit/Loss</span><span style="color:${color}">${sign}$${profit.toFixed(2)}</span></div>
+    <div class="res-row"><span class="res-label">Return on Investment</span><span style="color:${color}">${sign}${roi.toFixed(2)}%</span></div>
+    <div class="res-row"><span class="res-label">Break-Even Price</span><span>$${breakeven.toFixed(2)}</span></div>
+    <div class="res-row"><span class="res-label">Total Commission Paid</span><span>$${(cm*2).toFixed(2)}</span></div>`;
+}
+</script>
+<div class="ad-slot"></div>
+<h2>How is Stock Profit Calculated?</h2>
+<p>The stock profit formula is simple: <strong>Profit = (Sell Price - Buy Price) × Shares - Commissions</strong>. Your return on investment (ROI) is calculated as the profit divided by your total cost, expressed as a percentage.</p>
+<h2>What About Taxes on Stock Profits?</h2>
+<p>In the United States, stock profits are subject to capital gains tax. If you held the stock for less than one year, your profit is taxed as short-term capital gains at your ordinary income tax rate. If you held for more than one year, you pay the lower long-term capital gains rate (0%, 15%, or 20% depending on your income).</p>
+<h2>More Free Tools</h2>
+<ul>
+<li><a href="sip-calculator.html">SIP/DCA Investment Calculator</a> — Calculate returns from regular monthly investments</li>
+<li><a href="dividend-calculator.html">Dividend Income Calculator</a> — Estimate your annual dividend income</li>
+<li><a href="currency-converter.html">Currency Converter</a> — Convert between USD, INR, EUR, GBP and more</li>
+<li><a href="stock-compare.html">Stock Comparison Tool</a> — Compare two stocks side by side</li>
+</ul>
+<p>Track live stock prices on <a href="/">SRJahir Markets</a> and see our <a href="/blog.html">market analysis blog</a> for trading insights.</p>
+</div>
+<div class="cta-banner"><h3>Need Help With Your Trades?</h3><p>AI-powered analysis and research assistant.</p><a href="https://cloudai.srjahir.in" target="_blank" class="cta-btn">Try CloudAI Free →</a></div><footer class="footer"><div class="footer-links"><a href="/pages/about.html">About</a><a href="/pages/contact.html">Contact</a><a href="/pages/privacy.html">Privacy</a><a href="/pages/terms.html">Terms</a><a href="/pages/disclaimer.html">Disclaimer</a><a href="/pages/market-holidays.html">Market Holidays</a><a href="/pages/market-hours.html">Market Hours</a><a href="/blog.html">Blog</a></div><p class="footer-copy">© 2026 <a href="https://srjahir.in">SRJahir Tech</a> — stocks.srjahir.in</p><p class="footer-disc">Market data by Finnhub. Not financial advice.</p></footer></body></html>

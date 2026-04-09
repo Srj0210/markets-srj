@@ -1,0 +1,65 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SIP Calculator — How Much Will My Monthly Investment Grow? [Free]</title>
+<meta name="description" content="Free SIP/DCA calculator. See how much your monthly stock market investment will grow over 5, 10, 20, 30 years with compound returns.">
+<meta name="keywords" content="SIP calculator, DCA calculator, monthly investment calculator, compound interest stocks">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://stocks.srjahir.in/tools/sip-calculator.html">
+<meta property="og:title" content="SIP Calculator — How Much Will My Monthly Investment Grow? [Free]">
+<meta property="og:description" content="Free SIP/DCA calculator. See how much your monthly stock market investment will grow over 5, 10, 20, 30 years with compound returns.">
+<meta property="og:url" content="https://stocks.srjahir.in/tools/sip-calculator.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://stocks.srjahir.in/logo.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is DCA in stocks?", "acceptedAnswer": {"@type": "Answer", "text": "Dollar Cost Averaging (DCA) means investing a fixed amount regularly regardless of price. It reduces the impact of market volatility on your portfolio."}}, {"@type": "Question", "name": "How much should I invest monthly in stocks?", "acceptedAnswer": {"@type": "Answer", "text": "Financial advisors recommend investing 15-20% of your income. Even $100/month in an S&P 500 ETF can grow to over $100,000 in 20 years."}}, {"@type": "Question", "name": "What is the average stock market return?", "acceptedAnswer": {"@type": "Answer", "text": "The S&P 500 has returned an average of about 10% per year since 1926, or about 7% after adjusting for inflation."}}]}</script>
+<link rel="icon" type="image/png" href="../logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<style>.calc-box{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:24px;max-width:520px;margin:20px auto}.calc-input{width:100%;padding:12px;background:#0d1117;border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:16px;margin:6px 0 16px}.calc-btn{width:100%;padding:14px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer}.calc-btn:hover{opacity:0.9}.calc-result{background:#0d1117;border:1px solid var(--border);border-radius:8px;padding:20px;margin-top:20px}.res-big{font-size:32px;font-weight:700;margin:8px 0;text-align:center}.res-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px}.res-label{color:var(--text-muted)}</style>
+</head><body class="dark"><header class="navbar"><div class="nav-left"><img src="../logo.png" class="logo" onclick="location.href='/'" alt="SRJahir Markets"><h1 class="brand">SRJahir Markets</h1></div><nav class="nav-right"><a href="/" class="btn ghost">Home</a><a href="/blog.html" class="btn ghost">Blog</a><a href="/tools/profit-loss-calculator.html" class="btn ghost">Tools</a></nav></header>
+<div class="page-content" style="max-width:700px">
+<p style="font-size:12px;color:var(--text-muted)"><a href="/">Home</a> → <a href="/tools/profit-loss-calculator.html">Tools</a> → SIP Calculator</p>
+<h1>SIP/DCA Investment Calculator</h1>
+<p>See how much your regular monthly investments will grow over time with compound returns. Perfect for planning your <strong>Dollar Cost Averaging (DCA)</strong> strategy in the US stock market.</p>
+<div class="ad-slot"></div>
+<div class="calc-box">
+<label style="font-size:13px;color:var(--text-muted)">Monthly Investment ($)</label>
+<input type="number" id="monthly" class="calc-input" placeholder="e.g. 500" value="500">
+<label style="font-size:13px;color:var(--text-muted)">Expected Annual Return (%)</label>
+<input type="number" id="rate" class="calc-input" placeholder="e.g. 10" value="10" step="0.1">
+<label style="font-size:13px;color:var(--text-muted)">Investment Period (Years)</label>
+<input type="number" id="years" class="calc-input" placeholder="e.g. 20" value="20">
+<button class="calc-btn" onclick="calcSIP()">Calculate Growth</button>
+<div id="result" class="calc-result" style="display:none"></div>
+</div>
+<script>
+function calcSIP(){
+  const m=parseFloat(document.getElementById('monthly').value);
+  const r=parseFloat(document.getElementById('rate').value)/100/12;
+  const n=parseFloat(document.getElementById('years').value)*12;
+  if(!m||!r||!n)return alert('Fill all fields');
+  const fv=m*((Math.pow(1+r,n)-1)/r)*(1+r);
+  const invested=m*n;
+  const gains=fv-invested;
+  document.getElementById('result').style.display='block';
+  document.getElementById('result').innerHTML=`
+    <div class="res-big" style="color:#25d97a">$`+fv.toLocaleString('en-US',{maximumFractionDigits:0})+`</div>
+    <div style="text-align:center;font-size:13px;color:var(--text-muted);margin-bottom:16px">Total Portfolio Value</div>
+    <div class="res-row"><span class="res-label">Total Invested</span><span>$`+invested.toLocaleString('en-US',{maximumFractionDigits:0})+`</span></div>
+    <div class="res-row"><span class="res-label">Investment Gains</span><span style="color:#25d97a">+$`+gains.toLocaleString('en-US',{maximumFractionDigits:0})+`</span></div>
+    <div class="res-row"><span class="res-label">Total Return</span><span style="color:#25d97a">`+(gains/invested*100).toFixed(1)+`%</span></div>
+    <div class="res-row"><span class="res-label">Monthly Investment</span><span>$`+m.toLocaleString()+`</span></div>
+    <div class="res-row"><span class="res-label">Time Period</span><span>`+document.getElementById('years').value+` years</span></div>`;
+}
+</script>
+<div class="ad-slot"></div>
+<h2>How Does DCA Work in the Stock Market?</h2>
+<p>Dollar Cost Averaging means investing a fixed dollar amount at regular intervals — say $500 every month into an S&P 500 ETF like <a href="/stock.html?symbol=VOO">VOO</a> or <a href="/stock.html?symbol=SPY">SPY</a>. When prices are low, your $500 buys more shares. When prices are high, you buy fewer shares. Over time, this averages out your cost basis and removes the stress of timing the market.</p>
+<h2>Real Example: $500/month in S&P 500 for 20 Years</h2>
+<p>At the historical average return of ~10% per year, investing $500 per month for 20 years would turn $120,000 of total contributions into approximately <strong>$382,000</strong> — that's $262,000 in pure investment gains from compound returns.</p>
+<h2>More Free Tools</h2>
+<ul>
+<li><a href="profit-loss-calculator.html">Stock Profit/Loss Calculator</a></li>
+<li><a href="dividend-calculator.html">Dividend Income Calculator</a></li>
+<li><a href="currency-converter.html">Currency Converter</a></li>
+</ul>
+</div>
+<div class="cta-banner"><h3>Ask CloudAI About Investment Strategies</h3><p>AI-powered analysis and research assistant.</p><a href="https://cloudai.srjahir.in" target="_blank" class="cta-btn">Try CloudAI Free →</a></div><footer class="footer"><div class="footer-links"><a href="/pages/about.html">About</a><a href="/pages/contact.html">Contact</a><a href="/pages/privacy.html">Privacy</a><a href="/pages/terms.html">Terms</a><a href="/pages/disclaimer.html">Disclaimer</a><a href="/pages/market-holidays.html">Market Holidays</a><a href="/pages/market-hours.html">Market Hours</a><a href="/blog.html">Blog</a></div><p class="footer-copy">© 2026 <a href="https://srjahir.in">SRJahir Tech</a> — stocks.srjahir.in</p><p class="footer-disc">Market data by Finnhub. Not financial advice.</p></footer></body></html>

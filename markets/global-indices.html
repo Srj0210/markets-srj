@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Global Stock Market Indices — Live Prices for World Markets [{YEAR}]</title>
+<meta name="description" content="Track global stock market indices live — Nifty 50, Sensex, FTSE 100, DAX, Nikkei 225, S&P 500, and more world markets.">
+<meta name="keywords" content="global stock markets, Nifty 50, Sensex, FTSE 100, Nikkei 225, DAX, world market indices">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://stocks.srjahir.in/markets/global-indices.html">
+<meta property="og:title" content="Global Stock Market Indices — Live Prices for World Markets [{YEAR}]">
+<meta property="og:description" content="Track global stock market indices live — Nifty 50, Sensex, FTSE 100, DAX, Nikkei 225, S&P 500, and more world markets.">
+<meta property="og:url" content="https://stocks.srjahir.in/markets/global-indices.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://stocks.srjahir.in/logo.png">
+
+<link rel="icon" type="image/png" href="../logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+
+</head><body class="dark"><header class="navbar"><div class="nav-left"><img src="../logo.png" class="logo" onclick="location.href='/'" alt="SRJahir Markets"><h1 class="brand">SRJahir Markets</h1></div><nav class="nav-right"><a href="/" class="btn ghost">Home</a><a href="/blog.html" class="btn ghost">Blog</a><a href="/tools/profit-loss-calculator.html" class="btn ghost">Tools</a></nav></header>
+<div class="section" style="max-width:900px;margin:30px auto">
+<h1 class="section-title" style="font-size:26px">Global Stock Market Indices — Live</h1>
+<p class="section-desc">Real-time prices for major stock market indices around the world, tracked via their most liquid ETF proxies.</p>
+<div class="ad-slot"></div>
+<div id="globalGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px"><p style="color:var(--text-muted)">Loading global markets...</p></div>
+<script>
+const API="https://autumn-band-75e8.surajmaitra1996.workers.dev";
+const indices=[
+  {name:'🇺🇸 S&P 500',sym:'SPY',region:'United States'},
+  {name:'🇺🇸 NASDAQ 100',sym:'QQQ',region:'United States'},
+  {name:'🇺🇸 Dow Jones',sym:'DIA',region:'United States'},
+  {name:'🇺🇸 Russell 2000',sym:'IWM',region:'United States'},
+  {name:'🇮🇳 India (Nifty 50)',sym:'INDA',region:'India'},
+  {name:'🇬🇧 UK (FTSE 100)',sym:'EWU',region:'United Kingdom'},
+  {name:'🇩🇪 Germany (DAX)',sym:'EWG',region:'Germany'},
+  {name:'🇯🇵 Japan (Nikkei)',sym:'EWJ',region:'Japan'},
+  {name:'🇨🇳 China',sym:'MCHI',region:'China'},
+  {name:'🇧🇷 Brazil',sym:'EWZ',region:'Brazil'},
+  {name:'🇰🇷 South Korea',sym:'EWY',region:'South Korea'},
+  {name:'🇦🇺 Australia',sym:'EWA',region:'Australia'},
+];
+async function loadGlobal(){
+  const results=await Promise.all(indices.map(async idx=>{
+    try{const r=await fetch(API+'/quote?symbol='+idx.sym);return{...idx,q:await r.json()}}catch{return{...idx,q:null}}
+  }));
+  document.getElementById('globalGrid').innerHTML=results.map(idx=>{
+    if(!idx.q||!idx.q.c)return `<div class="tile"><div>${idx.name}</div><div>—</div></div>`;
+    const ch=((idx.q.c-idx.q.pc)/idx.q.pc*100);
+    return `<div class="tile clickable" onclick="location.href='/stock.html?symbol=${idx.sym}'"><div style="font-size:15px;font-weight:600">${idx.name}</div><div style="font-size:12px;color:var(--text-muted)">${idx.sym} ETF · ${idx.region}</div><div style="font-size:22px;font-weight:700;margin:6px 0">$${idx.q.c.toFixed(2)}</div><div class="${ch>=0?'pos':'neg'}" style="font-weight:600">${ch>=0?'+':''}${ch.toFixed(2)}%</div></div>`;
+  }).join('');
+}
+loadGlobal();
+</script>
+<div class="ad-slot"></div>
+<h2>Understanding Global Markets</h2>
+<p>Global stock markets operate in different time zones. When the US market closes, Asian markets open. European markets overlap with both US and Asian sessions. This creates a 24-hour cycle of global trading activity.</p>
+<h2>How to Invest in International Markets</h2>
+<p>The easiest way to invest in international markets from a US brokerage is through country-specific ETFs: INDA for India, EWU for UK, EWG for Germany, EWJ for Japan. These trade on US exchanges during US market hours.</p>
+<p>See: <a href="/pages/market-hours.html">Market Hours by Timezone</a> | <a href="/">US Market Dashboard</a></p>
+</div>
+<div class="cta-banner"><h3>Ask CloudAI About This</h3><p>AI-powered analysis and research assistant.</p><a href="https://cloudai.srjahir.in" target="_blank" class="cta-btn">Try CloudAI Free →</a></div><footer class="footer"><div class="footer-links"><a href="/pages/about.html">About</a><a href="/pages/contact.html">Contact</a><a href="/pages/privacy.html">Privacy</a><a href="/pages/terms.html">Terms</a><a href="/pages/disclaimer.html">Disclaimer</a><a href="/pages/market-holidays.html">Market Holidays</a><a href="/pages/market-hours.html">Market Hours</a><a href="/blog.html">Blog</a></div><p class="footer-copy">© 2026 <a href="https://srjahir.in">SRJahir Tech</a> — stocks.srjahir.in</p><p class="footer-disc">Market data by Finnhub. Not financial advice.</p></footer></body></html>

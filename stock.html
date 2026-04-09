@@ -3,46 +3,41 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Stock — SRJahir Markets</title>
-
+  <title id="pageTitle">Stock Price & Chart — SRJahir Markets</title>
+  <meta name="description" id="pageMeta" content="Live stock price, interactive chart, fundamentals, and news. Track this stock in real-time on SRJahir Markets." />
+  <meta name="robots" content="index, follow" />
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
-
   <script src="https://unpkg.com/lightweight-charts@4.1.0/dist/lightweight-charts.standalone.production.js"></script>
-  <script src="animation.js" defer></script>
-  <script src="script-stock.js" defer></script>
 </head>
-
 <body class="dark">
-
 <header class="navbar">
   <div class="nav-left">
-    <img src="logo.png" class="logo" onclick="window.location='index.html'"/>
+    <img src="logo.png" class="logo" alt="SRJahir Markets" onclick="location.href='/'" />
     <h1 class="brand">SRJahir Markets</h1>
   </div>
-
-  <div class="nav-right">
-    <button onclick="window.location='index.html'" class="btn ghost">Home</button>
-  </div>
+  <nav class="nav-right">
+    <a href="/" class="btn ghost">Home</a>
+    <a href="/blog.html" class="btn ghost">Blog</a>
+  </nav>
 </header>
 
 <div class="section">
-
-  <!-- Stock Header -->
   <div class="tile stock-header-tile">
     <div>
       <h2 id="stockName">Loading...</h2>
       <div id="stockSymbol" class="symbol-sub"></div>
     </div>
-
-    <div class="stock-price-box">
+    <div style="text-align:right">
       <div id="stockPrice" class="big-price">—</div>
       <div id="stockChange" class="change-tag">—</div>
       <button id="watchBtn" class="btn ghost small-btn">☆ Watch</button>
     </div>
   </div>
 
-  <!-- Chart -->
+  <div class="ad-slot"></div>
+
   <div class="tile">
     <div class="chart-toolbar">
       <button data-range="1D" class="range">1D</button>
@@ -51,32 +46,53 @@
       <button data-range="6M" class="range">6M</button>
       <button data-range="1Y" class="range">1Y</button>
       <button data-range="5Y" class="range">5Y</button>
-
       <span class="type-switch">
         <label><input type="radio" name="ctype" value="line" checked /> Line</label>
         <label><input type="radio" name="ctype" value="candle" /> Candle</label>
       </span>
     </div>
-
     <div id="chart" style="height:420px;"></div>
   </div>
 
-  <!-- Fundamentals + News -->
   <div class="grid fundamentals-grid">
     <div class="tile">
       <h3>Fundamentals</h3>
       <ul id="fundList" class="fund-list"></ul>
     </div>
-
     <div class="tile">
       <h3>Related News</h3>
       <div id="relatedNews"></div>
     </div>
   </div>
 
+  <div class="ad-slot"></div>
 </div>
 
-<footer class="footer">© 2025 SRJahir Markets — Stock Detail</footer>
+<div class="cta-banner">
+  <h3>Ask CloudAI About This Stock</h3>
+  <p>Get AI-powered analysis, comparisons, and explanations.</p>
+  <a href="https://cloudai.srjahir.in" target="_blank" class="cta-btn">Try CloudAI →</a>
+</div>
 
+<footer class="footer">
+  <div class="footer-links">
+    <a href="pages/about.html">About</a>
+    <a href="pages/contact.html">Contact</a>
+    <a href="pages/privacy.html">Privacy</a>
+    <a href="pages/disclaimer.html">Disclaimer</a>
+  </div>
+  <p class="footer-copy">© 2026 <a href="https://srjahir.in">SRJahir Tech</a></p>
+  <p class="footer-disc">Market data by Finnhub. Not financial advice.</p>
+</footer>
+
+<script src="script-stock.js" defer></script>
+<script>
+  // Dynamic SEO title
+  const sym = new URLSearchParams(location.search).get("symbol") || "";
+  if(sym) {
+    document.getElementById("pageTitle").textContent = `${sym.toUpperCase()} Stock Price & Chart — SRJahir Markets`;
+    document.getElementById("pageMeta").content = `Live ${sym.toUpperCase()} stock price, interactive chart, company fundamentals, and latest news on SRJahir Markets.`;
+  }
+</script>
 </body>
 </html>

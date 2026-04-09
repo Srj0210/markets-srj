@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Dividend Calculator — How Much Will I Earn? [Free Tool {YEAR}]</title>
+<meta name="description" content="Free dividend income calculator. Calculate annual and monthly dividend income from your stock investments. Updated 2026.">
+<meta name="keywords" content="dividend calculator, dividend income, dividend yield calculator, passive income stocks">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://stocks.srjahir.in/tools/dividend-calculator.html">
+<meta property="og:title" content="Dividend Calculator — How Much Will I Earn? [Free Tool {YEAR}]">
+<meta property="og:description" content="Free dividend income calculator. Calculate annual and monthly dividend income from your stock investments. Updated 2026.">
+<meta property="og:url" content="https://stocks.srjahir.in/tools/dividend-calculator.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://stocks.srjahir.in/logo.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How are dividends calculated?", "acceptedAnswer": {"@type": "Answer", "text": "Annual Dividend Income = Number of Shares \u00d7 Annual Dividend Per Share. Divide by 4 for quarterly payments or 12 for monthly estimates."}}, {"@type": "Question", "name": "What is a good dividend yield?", "acceptedAnswer": {"@type": "Answer", "text": "A good dividend yield is typically between 2% and 6%. Very high yields (above 8%) may signal risk. The S&P 500 average yield is about 1.3%."}}]}</script>
+<link rel="icon" type="image/png" href="../logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<style>.calc-box{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:24px;max-width:520px;margin:20px auto}.calc-input{width:100%;padding:12px;background:#0d1117;border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:16px;margin:6px 0 16px}.calc-btn{width:100%;padding:14px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer}.calc-btn:hover{opacity:0.9}.calc-result{background:#0d1117;border:1px solid var(--border);border-radius:8px;padding:20px;margin-top:20px}.res-big{font-size:32px;font-weight:700;margin:8px 0;text-align:center}.res-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px}.res-label{color:var(--text-muted)}</style>
+</head><body class="dark"><header class="navbar"><div class="nav-left"><img src="../logo.png" class="logo" onclick="location.href='/'" alt="SRJahir Markets"><h1 class="brand">SRJahir Markets</h1></div><nav class="nav-right"><a href="/" class="btn ghost">Home</a><a href="/blog.html" class="btn ghost">Blog</a><a href="/tools/profit-loss-calculator.html" class="btn ghost">Tools</a></nav></header>
+<div class="page-content" style="max-width:700px">
+<h1>Dividend Income Calculator</h1>
+<p>Calculate how much dividend income you'll earn from your stock investments. Enter the stock price, dividend yield, and your investment amount to see annual and monthly income.</p>
+<div class="ad-slot"></div>
+<div class="calc-box">
+<label style="font-size:13px;color:var(--text-muted)">Total Investment ($)</label>
+<input type="number" id="invest" class="calc-input" placeholder="e.g. 10000" value="10000">
+<label style="font-size:13px;color:var(--text-muted)">Annual Dividend Yield (%)</label>
+<input type="number" id="yield_r" class="calc-input" placeholder="e.g. 3.5" value="3.5" step="0.1">
+<label style="font-size:13px;color:var(--text-muted)">Dividend Growth Rate (% per year) — optional</label>
+<input type="number" id="growth" class="calc-input" placeholder="e.g. 5" value="5" step="0.1">
+<label style="font-size:13px;color:var(--text-muted)">Holding Period (Years)</label>
+<input type="number" id="holdYears" class="calc-input" placeholder="e.g. 10" value="10">
+<button class="calc-btn" onclick="calcDiv()">Calculate Dividend Income</button>
+<div id="result" class="calc-result" style="display:none"></div>
+</div>
+<script>
+function calcDiv(){
+  const inv=parseFloat(document.getElementById('invest').value);
+  const y=parseFloat(document.getElementById('yield_r').value)/100;
+  const g=parseFloat(document.getElementById('growth').value)/100||0;
+  const yrs=parseInt(document.getElementById('holdYears').value);
+  if(!inv||!y||!yrs)return alert('Fill required fields');
+  const yr1=inv*y;
+  let total=0;for(let i=0;i<yrs;i++)total+=inv*y*Math.pow(1+g,i);
+  const yrN=inv*y*Math.pow(1+g,yrs-1);
+  document.getElementById('result').style.display='block';
+  document.getElementById('result').innerHTML=`
+    <div class="res-big" style="color:#25d97a">$`+yr1.toFixed(2)+` /year</div>
+    <div style="text-align:center;font-size:13px;color:var(--text-muted);margin-bottom:16px">Year 1 Dividend Income</div>
+    <div class="res-row"><span class="res-label">Monthly Income (Year 1)</span><span>$`+(yr1/12).toFixed(2)+`</span></div>
+    <div class="res-row"><span class="res-label">Year `+yrs+` Annual Income</span><span style="color:#25d97a">$`+yrN.toFixed(2)+`</span></div>
+    <div class="res-row"><span class="res-label">Total Dividends (`+yrs+` years)</span><span style="color:#25d97a">$`+total.toFixed(2)+`</span></div>
+    <div class="res-row"><span class="res-label">Yield on Cost (Year `+yrs+`)</span><span>`+(yrN/inv*100).toFixed(2)+`%</span></div>`;
+}
+</script>
+<div class="ad-slot"></div>
+<h2>Top Dividend Stocks to Consider</h2>
+<p>Check these popular dividend-paying stocks: <a href="/stock.html?symbol=KO">Coca-Cola (KO)</a>, <a href="/stock.html?symbol=JNJ">Johnson & Johnson (JNJ)</a>, <a href="/stock.html?symbol=PG">Procter & Gamble (PG)</a>, <a href="/stock.html?symbol=VZ">Verizon (VZ)</a>. Read our <a href="/blog/top-dividend-stocks-2026.html">Top 10 Dividend Stocks</a> guide.</p>
+<h2>More Tools</h2>
+<ul><li><a href="profit-loss-calculator.html">Profit/Loss Calculator</a></li><li><a href="sip-calculator.html">SIP/DCA Calculator</a></li><li><a href="currency-converter.html">Currency Converter</a></li></ul>
+</div>
+<div class="cta-banner"><h3>Ask CloudAI About This</h3><p>AI-powered analysis and research assistant.</p><a href="https://cloudai.srjahir.in" target="_blank" class="cta-btn">Try CloudAI Free →</a></div><footer class="footer"><div class="footer-links"><a href="/pages/about.html">About</a><a href="/pages/contact.html">Contact</a><a href="/pages/privacy.html">Privacy</a><a href="/pages/terms.html">Terms</a><a href="/pages/disclaimer.html">Disclaimer</a><a href="/pages/market-holidays.html">Market Holidays</a><a href="/pages/market-hours.html">Market Hours</a><a href="/blog.html">Blog</a></div><p class="footer-copy">© 2026 <a href="https://srjahir.in">SRJahir Tech</a> — stocks.srjahir.in</p><p class="footer-disc">Market data by Finnhub. Not financial advice.</p></footer></body></html>

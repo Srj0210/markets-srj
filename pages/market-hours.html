@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>US Stock Market Hours — Trading Times in Your Timezone</title>
+<meta name="description" content="US stock market trading hours in every timezone. Know when NYSE and NASDAQ open and close in India, UK, Dubai, Australia, Japan, and more.">
+<link rel="canonical" href="https://stocks.srjahir.in/pages/market-hours.html">
+<link rel="icon" type="image/png" href="../logo.png"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../styles.css"></head><body class="dark">
+<header class="navbar"><div class="nav-left"><img src="../logo.png" class="logo" onclick="location.href='/'" alt="Logo"><h1 class="brand">SRJahir Markets</h1></div><nav class="nav-right"><a href="/" class="btn ghost">Home</a></nav></header>
+<div class="page-content">
+<h1>US Stock Market Hours</h1>
+<p>The US stock market (NYSE & NASDAQ) operates on Eastern Time (ET). Here are the trading sessions and their times in popular timezones around the world.</p>
+<h2>Trading Sessions (Eastern Time)</h2>
+<table style="width:100%;border-collapse:collapse;margin:20px 0">
+<tr style="border-bottom:1px solid var(--border);background:var(--panel)"><th style="padding:12px;text-align:left">Session</th><th style="padding:12px;text-align:left">Hours (ET)</th><th style="padding:12px;text-align:left">Description</th></tr>
+<tr style="border-bottom:1px solid var(--border)"><td style="padding:12px">Pre-Market</td><td style="padding:12px">4:00 AM – 9:30 AM</td><td style="padding:12px">Limited liquidity, wider spreads</td></tr>
+<tr style="border-bottom:1px solid var(--border)"><td style="padding:12px"><strong>Regular Session</strong></td><td style="padding:12px"><strong>9:30 AM – 4:00 PM</strong></td><td style="padding:12px">Main trading session, highest volume</td></tr>
+<tr style="border-bottom:1px solid var(--border)"><td style="padding:12px">After-Hours</td><td style="padding:12px">4:00 PM – 8:00 PM</td><td style="padding:12px">Earnings reactions, lower volume</td></tr>
+</table>
+<div class="ad-slot"></div>
+<h2>Market Hours by Timezone</h2>
+<p>Regular trading session (9:30 AM – 4:00 PM ET) in your timezone:</p>
+<table style="width:100%;border-collapse:collapse;margin:20px 0">
+<tr style="border-bottom:1px solid var(--border);background:var(--panel)"><th style="padding:12px;text-align:left">Country</th><th style="padding:12px;text-align:left">Timezone</th><th style="padding:12px;text-align:left">Market Open</th><th style="padding:12px;text-align:left">Market Close</th></tr>
+<tr style="border-bottom:1px solid var(--border)"><td style="padding:12px">🇺🇸 US (Eastern)</td><td style="padding:12px">ET (UTC-5)</td><td style="padding:12px">9:30 AM</td><td style="padding:12px">4:00 PM</td></tr>
+<tr style="border-bottom:1px solid var(--border)"><td style="padding:12px">🇺🇸 US (Pacific)</td><td style="padding:12px">PT (UTC-8)</td><td style="padding:12px">6:30 AM</td><td style="padding:12px">1:00 PM</td></tr>
+<tr style="border-bottom:1px solid var(--border)"><td style="padding:12px">🇬🇧 United Kingdom</td><td style="padding:12px">GMT/BST</td><td style="padding:12px">2:30 PM</td><td style="padding:12px">9:00 PM</td></tr>
+<tr style="border-bottom:1px solid var(--border)"><td style="padding:12px">🇮🇳 India</td><td style="padding:12px">IST (UTC+5:30)</td><td style="padding:12px">7:00 PM</td><td style="padding:12px">1:30 AM (+1)</td></tr>
+<tr style="border-bottom:1px solid var(--border)"><td style="padding:12px">🇦🇪 Dubai / UAE</td><td style="padding:12px">GST (UTC+4)</td><td style="padding:12px">5:30 PM</td><td style="padding:12px">12:00 AM (+1)</td></tr>
+<tr style="border-bottom:1px solid var(--border)"><td style="padding:12px">🇸🇬 Singapore</td><td style="padding:12px">SGT (UTC+8)</td><td style="padding:12px">9:30 PM</td><td style="padding:12px">4:00 AM (+1)</td></tr>
+<tr style="border-bottom:1px solid var(--border)"><td style="padding:12px">🇯🇵 Japan</td><td style="padding:12px">JST (UTC+9)</td><td style="padding:12px">10:30 PM</td><td style="padding:12px">5:00 AM (+1)</td></tr>
+<tr style="border-bottom:1px solid var(--border)"><td style="padding:12px">🇦🇺 Australia</td><td style="padding:12px">AEST (UTC+10)</td><td style="padding:12px">11:30 PM</td><td style="padding:12px">6:00 AM (+1)</td></tr>
+<tr style="border-bottom:1px solid var(--border)"><td style="padding:12px">🇩🇪 Germany</td><td style="padding:12px">CET (UTC+1)</td><td style="padding:12px">3:30 PM</td><td style="padding:12px">10:00 PM</td></tr>
+<tr style="border-bottom:1px solid var(--border)"><td style="padding:12px">🇧🇷 Brazil</td><td style="padding:12px">BRT (UTC-3)</td><td style="padding:12px">10:30 AM</td><td style="padding:12px">5:00 PM</td></tr>
+</table>
+<p><em>Note: Times change during Daylight Saving Time transitions. The US observes DST from March to November.</em></p>
+<h2>Your Current Time vs Market</h2>
+<div id="liveClockBox" style="background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin:20px 0;text-align:center">
+<div style="font-size:13px;color:var(--text-muted)">Your Local Time</div>
+<div id="localClock" style="font-size:28px;font-weight:700;margin:6px 0">--:--:--</div>
+<div style="font-size:13px;color:var(--text-muted);margin-top:10px">New York (ET)</div>
+<div id="nyClock" style="font-size:22px;font-weight:600;margin:4px 0">--:--:--</div>
+<div id="marketNow" style="margin-top:10px;font-weight:600"></div>
+</div>
+<script>
+function updateClocks(){
+  const now=new Date();
+  document.getElementById('localClock').textContent=now.toLocaleTimeString();
+  const ny=new Date(now.toLocaleString("en-US",{timeZone:"America/New_York"}));
+  document.getElementById('nyClock').textContent=ny.toLocaleTimeString("en-US",{timeZone:"America/New_York"});
+  const h=ny.getHours(),m=ny.getMinutes(),t=h*60+m,d=ny.getDay();
+  const el=document.getElementById('marketNow');
+  if(d===0||d===6)el.innerHTML='<span style="color:#ff4b4b">🔴 Market Closed — Weekend</span>';
+  else if(t>=570&&t<960)el.innerHTML='<span style="color:#25d97a">🟢 Market is OPEN</span>';
+  else if(t>=240&&t<570)el.innerHTML='<span style="color:#f59e0b">🟡 Pre-Market Session</span>';
+  else if(t>=960&&t<1200)el.innerHTML='<span style="color:#f59e0b">🟡 After-Hours Session</span>';
+  else el.innerHTML='<span style="color:#ff4b4b">🔴 Market Closed</span>';
+}
+updateClocks();setInterval(updateClocks,1000);
+</script>
+<div class="ad-slot"></div>
+<h2>Best Times to Trade</h2>
+<p><strong>First 30 minutes (9:30–10:00 AM ET):</strong> Highest volatility and volume. Gap ups/downs from overnight news get resolved. Best for momentum traders.</p>
+<p><strong>Midday (11:30 AM–2:00 PM ET):</strong> Lowest volume period. Markets often drift sideways. Not ideal for active trading.</p>
+<p><strong>Last hour (3:00–4:00 PM ET):</strong> The "power hour." Institutional investors make large trades, volume picks up, and trends often accelerate into the close.</p>
+<p>See also: <a href="market-holidays.html">US Market Holidays 2026</a></p>
+</div>
+<div class="cta-banner"><h3>Never Miss Market Open</h3><p>Track live market status on SRJahir Markets homepage.</p><a href="/" class="cta-btn">Check Market Status →</a></div>
+<footer class="footer"><div class="footer-links"><a href="/pages/about.html">About</a><a href="/pages/contact.html">Contact</a><a href="/pages/privacy.html">Privacy</a><a href="/pages/disclaimer.html">Disclaimer</a></div><p class="footer-copy">© 2026 <a href="https://srjahir.in">SRJahir Tech</a></p></footer>
+</body></html>

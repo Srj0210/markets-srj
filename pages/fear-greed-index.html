@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Fear and Greed Index — Is the Market Greedy or Fearful Today? [{YEAR}]</title>
+<meta name="description" content="Check the market Fear and Greed Index today. Understand market sentiment using VIX, put/call ratio, market momentum, and more.">
+<meta name="keywords" content="fear and greed index, market sentiment, VIX, market fear, stock market greed">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://stocks.srjahir.in/pages/fear-greed-index.html">
+<meta property="og:title" content="Fear and Greed Index — Is the Market Greedy or Fearful Today? [{YEAR}]">
+<meta property="og:description" content="Check the market Fear and Greed Index today. Understand market sentiment using VIX, put/call ratio, market momentum, and more.">
+<meta property="og:url" content="https://stocks.srjahir.in/pages/fear-greed-index.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://stocks.srjahir.in/logo.png">
+
+<link rel="icon" type="image/png" href="../logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+
+</head><body class="dark"><header class="navbar"><div class="nav-left"><img src="../logo.png" class="logo" onclick="location.href='/'" alt="SRJahir Markets"><h1 class="brand">SRJahir Markets</h1></div><nav class="nav-right"><a href="/" class="btn ghost">Home</a><a href="/blog.html" class="btn ghost">Blog</a><a href="/tools/profit-loss-calculator.html" class="btn ghost">Tools</a></nav></header>
+<div class="section" style="max-width:800px;margin:30px auto">
+<h1 class="section-title" style="font-size:26px">Fear & Greed Index — Market Sentiment Today</h1>
+<p class="section-desc">Measure whether the stock market is driven by fear or greed. Extreme fear can signal buying opportunities. Extreme greed may indicate the market is overheated.</p>
+<div class="ad-slot"></div>
+<div id="fgiBox" style="background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:30px;text-align:center;margin:20px 0">
+<div id="fgiValue" style="font-size:64px;font-weight:700;margin:10px 0">—</div>
+<div id="fgiLabel" style="font-size:20px;font-weight:600;margin-bottom:10px">Loading...</div>
+<div style="background:#1a1d27;border-radius:8px;height:24px;overflow:hidden;margin:16px auto;max-width:400px"><div id="fgiBar" style="height:100%;width:50%;border-radius:8px;transition:width 0.5s"></div></div>
+<div style="display:flex;justify-content:space-between;max-width:400px;margin:0 auto;font-size:11px;color:var(--text-muted)"><span>Extreme Fear</span><span>Neutral</span><span>Extreme Greed</span></div>
+</div>
+<script>
+async function loadFGI(){
+  try{
+    const r=await fetch('https://api.alternative.me/fng/?limit=1');
+    const d=await r.json();
+    const val=parseInt(d.data[0].value);
+    const label=d.data[0].value_classification;
+    document.getElementById('fgiValue').textContent=val;
+    document.getElementById('fgiLabel').textContent=label;
+    const bar=document.getElementById('fgiBar');
+    bar.style.width=val+'%';
+    bar.style.background=val<25?'#ff4b4b':val<45?'#f59e0b':val<55?'#888':val<75?'#4da3ff':'#25d97a';
+    document.getElementById('fgiValue').style.color=bar.style.background;
+    document.getElementById('fgiLabel').style.color=bar.style.background;
+  }catch{document.getElementById('fgiLabel').textContent='Unable to load (crypto FGI shown)'}
+}
+loadFGI();
+</script>
+<p style="text-align:center;font-size:11px;color:var(--text-muted);margin-top:8px">Data: Alternative.me Crypto Fear & Greed Index (used as market sentiment proxy)</p>
+<div class="ad-slot"></div>
+<h2>What is the Fear and Greed Index?</h2>
+<p>The Fear and Greed Index measures market sentiment on a scale of 0 (Extreme Fear) to 100 (Extreme Greed). It combines several indicators including market volatility (VIX), trading volume, put/call ratios, and market momentum.</p>
+<h2>How to Use the Fear & Greed Index</h2>
+<p><strong>"Be fearful when others are greedy, and greedy when others are fearful."</strong> — Warren Buffett</p>
+<p>When the index shows Extreme Fear (0-25), it often means stocks are oversold and may present buying opportunities. When it shows Extreme Greed (75-100), the market may be overvalued and due for a pullback.</p>
+<p>However, this is just one tool — never make investment decisions based solely on sentiment indicators. Check our <a href="/blog/how-to-read-stock-charts.html">stock chart analysis guide</a> for more tools.</p>
+</div>
+<div class="cta-banner"><h3>Ask CloudAI About Market Sentiment</h3><p>AI-powered analysis and research assistant.</p><a href="https://cloudai.srjahir.in" target="_blank" class="cta-btn">Try CloudAI Free →</a></div><footer class="footer"><div class="footer-links"><a href="/pages/about.html">About</a><a href="/pages/contact.html">Contact</a><a href="/pages/privacy.html">Privacy</a><a href="/pages/terms.html">Terms</a><a href="/pages/disclaimer.html">Disclaimer</a><a href="/pages/market-holidays.html">Market Holidays</a><a href="/pages/market-hours.html">Market Hours</a><a href="/blog.html">Blog</a></div><p class="footer-copy">© 2026 <a href="https://srjahir.in">SRJahir Tech</a> — stocks.srjahir.in</p><p class="footer-disc">Market data by Finnhub. Not financial advice.</p></footer></body></html>

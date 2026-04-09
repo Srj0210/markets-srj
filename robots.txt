@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Sitemap: https://stocks.srjahir.in/sitemap.xml
+
+User-agent: Googlebot
+Allow: /
+
+Disallow: /404.html

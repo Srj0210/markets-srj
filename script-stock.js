@@ -194,7 +194,7 @@ async function loadRelatedNews() {
   const news = await getNews();
 
   container.innerHTML = news.slice(0, 8).map(n => `
-    <div class="news-card">
+    <a href="${n.url}" target="_blank" rel="noopener" class="news-card" style="display:block;text-decoration:none;color:inherit">
       <div class="news-title">${n.headline}</div>
       <div class="news-time">${new Date(n.datetime * 1000).toLocaleString()}</div>
       <div class="news-desc">${n.summary?.slice(0, 140)}...</div>

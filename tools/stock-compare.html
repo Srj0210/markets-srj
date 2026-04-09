@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Stock Comparison Tool — Compare Any 2 Stocks Side by Side [{YEAR}]</title>
+<meta name="description" content="Free stock comparison tool. Compare any two stocks side by side — price, market cap, P/E ratio, dividend yield, 52-week range, and more.">
+<meta name="keywords" content="stock comparison, compare stocks, NVDA vs AMD, AAPL vs MSFT, stock comparison tool">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://stocks.srjahir.in/tools/stock-compare.html">
+<meta property="og:title" content="Stock Comparison Tool — Compare Any 2 Stocks Side by Side [{YEAR}]">
+<meta property="og:description" content="Free stock comparison tool. Compare any two stocks side by side — price, market cap, P/E ratio, dividend yield, 52-week range, and more.">
+<meta property="og:url" content="https://stocks.srjahir.in/tools/stock-compare.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://stocks.srjahir.in/logo.png">
+
+<link rel="icon" type="image/png" href="../logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<style>.calc-box{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:24px;max-width:520px;margin:20px auto}.calc-input{width:100%;padding:12px;background:#0d1117;border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:16px;margin:6px 0 16px}.calc-btn{width:100%;padding:14px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer}.calc-btn:hover{opacity:0.9}.calc-result{background:#0d1117;border:1px solid var(--border);border-radius:8px;padding:20px;margin-top:20px}.res-big{font-size:32px;font-weight:700;margin:8px 0;text-align:center}.res-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px}.res-label{color:var(--text-muted)}</style>
+</head><body class="dark"><header class="navbar"><div class="nav-left"><img src="../logo.png" class="logo" onclick="location.href='/'" alt="SRJahir Markets"><h1 class="brand">SRJahir Markets</h1></div><nav class="nav-right"><a href="/" class="btn ghost">Home</a><a href="/blog.html" class="btn ghost">Blog</a><a href="/tools/profit-loss-calculator.html" class="btn ghost">Tools</a></nav></header>
+<div class="page-content" style="max-width:800px">
+<h1>Stock Comparison Tool — Compare Any 2 Stocks</h1>
+<p>Enter two stock symbols to compare them side by side. See price, market cap, P/E ratio, and more.</p>
+<div class="ad-slot"></div>
+<div class="calc-box" style="max-width:100%;display:flex;gap:12px;align-items:end;flex-wrap:wrap">
+<div style="flex:1;min-width:150px"><label style="font-size:13px;color:var(--text-muted)">Stock 1</label><input type="text" id="sym1" class="calc-input" placeholder="e.g. NVDA" style="text-transform:uppercase"></div>
+<div style="flex:1;min-width:150px"><label style="font-size:13px;color:var(--text-muted)">Stock 2</label><input type="text" id="sym2" class="calc-input" placeholder="e.g. AMD" style="text-transform:uppercase"></div>
+<button class="calc-btn" style="flex:0;min-width:140px;margin-bottom:16px" onclick="compareStocks()">Compare</button>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin:16px 0">
+<button class="btn ghost" onclick="quickCompare('NVDA','AMD')">NVDA vs AMD</button>
+<button class="btn ghost" onclick="quickCompare('AAPL','MSFT')">AAPL vs MSFT</button>
+<button class="btn ghost" onclick="quickCompare('TSLA','RIVN')">TSLA vs RIVN</button>
+<button class="btn ghost" onclick="quickCompare('GOOGL','META')">GOOGL vs META</button>
+<button class="btn ghost" onclick="quickCompare('SPY','QQQ')">SPY vs QQQ</button>
+</div>
+<div id="compareResult"></div>
+<script>
+const API="https://autumn-band-75e8.surajmaitra1996.workers.dev";
+function quickCompare(a,b){document.getElementById('sym1').value=a;document.getElementById('sym2').value=b;compareStocks()}
+async function compareStocks(){
+  const s1=document.getElementById('sym1').value.trim().toUpperCase();
+  const s2=document.getElementById('sym2').value.trim().toUpperCase();
+  if(!s1||!s2)return alert('Enter both symbols');
+  const el=document.getElementById('compareResult');
+  el.innerHTML='<p style="text-align:center;color:var(--text-muted)">Loading comparison...</p>';
+  try{
+    const [q1,q2,p1,p2]=await Promise.all([
+      fetch(API+'/quote?symbol='+s1).then(r=>r.json()),
+      fetch(API+'/quote?symbol='+s2).then(r=>r.json()),
+      fetch(API+'/profile?symbol='+s1).then(r=>r.json()),
+      fetch(API+'/profile?symbol='+s2).then(r=>r.json())
+    ]);
+    const ch1=q1.pc?((q1.c-q1.pc)/q1.pc*100):0;
+    const ch2=q2.pc?((q2.c-q2.pc)/q2.pc*100):0;
+    const fmt=n=>n?Number(n).toLocaleString('en-US'):'—';
+    const row=(label,v1,v2)=>`<div class="res-row"><span class="res-label">${label}</span><span>${v1}</span><span>${v2}</span></div>`;
+    el.innerHTML=`
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0">
+        <div class="tile" style="text-align:center;cursor:pointer" onclick="location.href='/stock.html?symbol=${s1}'">
+          <div style="font-size:24px;font-weight:700">${s1}</div>
+          <div style="font-size:13px;color:var(--text-muted)">${p1.name||s1}</div>
+          <div style="font-size:28px;font-weight:700;margin:8px 0">$${fmt(q1.c)}</div>
+          <div class="${ch1>=0?'pos':'neg'}" style="font-weight:600">${ch1>=0?'+':''}${ch1.toFixed(2)}%</div>
+        </div>
+        <div class="tile" style="text-align:center;cursor:pointer" onclick="location.href='/stock.html?symbol=${s2}'">
+          <div style="font-size:24px;font-weight:700">${s2}</div>
+          <div style="font-size:13px;color:var(--text-muted)">${p2.name||s2}</div>
+          <div style="font-size:28px;font-weight:700;margin:8px 0">$${fmt(q2.c)}</div>
+          <div class="${ch2>=0?'pos':'neg'}" style="font-weight:600">${ch2>=0?'+':''}${ch2.toFixed(2)}%</div>
+        </div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:16px">
+        <div class="res-row" style="font-weight:600"><span></span><span>${s1}</span><span>${s2}</span></div>
+        ${row('Price','$'+fmt(q1.c),'$'+fmt(q2.c))}
+        ${row('Day Change',(ch1>=0?'+':'')+ch1.toFixed(2)+'%',(ch2>=0?'+':'')+ch2.toFixed(2)+'%')}
+        ${row('Day High','$'+fmt(q1.h),'$'+fmt(q2.h))}
+        ${row('Day Low','$'+fmt(q1.l),'$'+fmt(q2.l))}
+        ${row('Previous Close','$'+fmt(q1.pc),'$'+fmt(q2.pc))}
+        ${row('Market Cap','$'+fmt(p1.marketCapitalization)+'M','$'+fmt(p2.marketCapitalization)+'M')}
+        ${row('Industry',p1.finnhubIndustry||'—',p2.finnhubIndustry||'—')}
+        ${row('Exchange',p1.exchange||'—',p2.exchange||'—')}
+        ${row('IPO Date',p1.ipo||'—',p2.ipo||'—')}
+        ${row('Country',p1.country||'—',p2.country||'—')}
+      </div>`;
+  }catch(e){el.innerHTML='<p style="color:var(--red)">Error loading data. Check symbols and try again.</p>'}
+}
+</script>
+<div class="ad-slot"></div>
+<h2>Popular Stock Comparisons</h2>
+<p><strong>NVIDIA vs AMD</strong> — The two biggest GPU and AI chip makers. <a href="/blog/nvidia-vs-amd-stock.html">Read our detailed analysis</a>.</p>
+<p><strong>AAPL vs MSFT</strong> — Apple and Microsoft, the two largest companies by market cap. Both are Magnificent Seven stocks.</p>
+<p><strong>SPY vs QQQ</strong> — S&P 500 vs NASDAQ 100 ETF. SPY is more diversified, QQQ is more tech-heavy. <a href="/blog/best-sp500-etfs-2026.html">See our ETF comparison</a>.</p>
+</div>
+<div class="cta-banner"><h3>Ask CloudAI to Analyze These Stocks</h3><p>AI-powered analysis and research assistant.</p><a href="https://cloudai.srjahir.in" target="_blank" class="cta-btn">Try CloudAI Free →</a></div><footer class="footer"><div class="footer-links"><a href="/pages/about.html">About</a><a href="/pages/contact.html">Contact</a><a href="/pages/privacy.html">Privacy</a><a href="/pages/terms.html">Terms</a><a href="/pages/disclaimer.html">Disclaimer</a><a href="/pages/market-holidays.html">Market Holidays</a><a href="/pages/market-hours.html">Market Hours</a><a href="/blog.html">Blog</a></div><p class="footer-copy">© 2026 <a href="https://srjahir.in">SRJahir Tech</a> — stocks.srjahir.in</p><p class="footer-disc">Market data by Finnhub. Not financial advice.</p></footer></body></html>

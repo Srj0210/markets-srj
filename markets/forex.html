@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Forex Rates Today — USD/INR, EUR/USD, GBP/USD [Live {YEAR}]</title>
+<meta name="description" content="Live forex exchange rates. Track USD/INR, EUR/USD, GBP/USD, USD/JPY, and major currency pairs in real-time.">
+<meta name="keywords" content="forex rates, USD INR, EUR USD, exchange rates today, currency rates live">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://stocks.srjahir.in/markets/forex.html">
+<meta property="og:title" content="Forex Rates Today — USD/INR, EUR/USD, GBP/USD [Live {YEAR}]">
+<meta property="og:description" content="Live forex exchange rates. Track USD/INR, EUR/USD, GBP/USD, USD/JPY, and major currency pairs in real-time.">
+<meta property="og:url" content="https://stocks.srjahir.in/markets/forex.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://stocks.srjahir.in/logo.png">
+
+<link rel="icon" type="image/png" href="../logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+
+</head><body class="dark"><header class="navbar"><div class="nav-left"><img src="../logo.png" class="logo" onclick="location.href='/'" alt="SRJahir Markets"><h1 class="brand">SRJahir Markets</h1></div><nav class="nav-right"><a href="/" class="btn ghost">Home</a><a href="/blog.html" class="btn ghost">Blog</a><a href="/tools/profit-loss-calculator.html" class="btn ghost">Tools</a></nav></header>
+<div class="section" style="max-width:900px;margin:30px auto">
+<h1 class="section-title" style="font-size:26px">Forex Exchange Rates — Live</h1>
+<p class="section-desc">Real-time exchange rates for major currency pairs against the US Dollar.</p>
+<div class="ad-slot"></div>
+<div id="forexGrid" style="display:flex;flex-direction:column;gap:8px"><p style="color:var(--text-muted)">Loading forex rates...</p></div>
+<script>
+const pairs=[['EUR','🇪🇺 Euro'],['GBP','🇬🇧 British Pound'],['INR','🇮🇳 Indian Rupee'],['JPY','🇯🇵 Japanese Yen'],['AED','🇦🇪 UAE Dirham'],['CAD','🇨🇦 Canadian Dollar'],['AUD','🇦🇺 Australian Dollar'],['CHF','🇨🇭 Swiss Franc'],['SGD','🇸🇬 Singapore Dollar'],['CNY','🇨🇳 Chinese Yuan'],['BRL','🇧🇷 Brazilian Real'],['MXN','🇲🇽 Mexican Peso'],['KRW','🇰🇷 South Korean Won'],['SEK','🇸🇪 Swedish Krona']];
+async function loadForex(){
+  try{
+    const r=await fetch('https://api.frankfurter.app/latest?from=USD&to='+pairs.map(p=>p[0]).join(','));
+    const d=await r.json();
+    document.getElementById('forexGrid').innerHTML=`
+      <div class="res-row" style="font-weight:600;color:var(--text-muted);font-size:13px"><span style="flex:2">Currency Pair</span><span style="flex:1;text-align:right">Rate</span><span style="flex:1;text-align:right">1 Unit in USD</span></div>
+    `+pairs.map(([code,name])=>{
+      const rate=d.rates[code];
+      if(!rate)return'';
+      return `<div class="mini-row" style="cursor:pointer" onclick="location.href='/tools/currency-converter.html'"><span style="flex:2"><strong>USD/${code}</strong> <span style="color:var(--text-muted);font-size:12px">${name}</span></span><span style="flex:1;text-align:right;font-weight:600">${rate.toFixed(code==='JPY'||code==='KRW'||code==='INR'?2:4)}</span><span style="flex:1;text-align:right;color:var(--text-muted)">${(1/rate).toFixed(4)}</span></div>`;
+    }).join('');
+  }catch{document.getElementById('forexGrid').innerHTML='<p style="color:var(--red)">Failed to load forex data.</p>'}
+}
+loadForex();
+</script>
+<div class="ad-slot"></div>
+<h2>What is Forex?</h2>
+<p>The foreign exchange (forex) market is the largest financial market in the world, with over $7.5 trillion traded daily. Currency exchange rates affect everything from the price of imported goods to the returns international investors earn on US stocks.</p>
+<h2>Convert Currencies</h2>
+<p>Use our <a href="/tools/currency-converter.html">free currency converter tool</a> to convert between any of these currencies instantly.</p>
+<p><a href="/markets/crypto.html">Crypto Prices</a> | <a href="/markets/commodities.html">Commodities</a> | <a href="/">US Stocks</a></p>
+</div>
+<div class="cta-banner"><h3>Ask CloudAI About This</h3><p>AI-powered analysis and research assistant.</p><a href="https://cloudai.srjahir.in" target="_blank" class="cta-btn">Try CloudAI Free →</a></div><footer class="footer"><div class="footer-links"><a href="/pages/about.html">About</a><a href="/pages/contact.html">Contact</a><a href="/pages/privacy.html">Privacy</a><a href="/pages/terms.html">Terms</a><a href="/pages/disclaimer.html">Disclaimer</a><a href="/pages/market-holidays.html">Market Holidays</a><a href="/pages/market-hours.html">Market Hours</a><a href="/blog.html">Blog</a></div><p class="footer-copy">© 2026 <a href="https://srjahir.in">SRJahir Tech</a> — stocks.srjahir.in</p><p class="footer-disc">Market data by Finnhub. Not financial advice.</p></footer></body></html>
