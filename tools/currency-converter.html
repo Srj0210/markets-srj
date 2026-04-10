@@ -14,7 +14,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../styles.css">
 <style>.calc-box{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:24px;max-width:520px;margin:20px auto}.calc-input{width:100%;padding:12px;background:#0d1117;border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:16px;margin:6px 0 16px}.calc-btn{width:100%;padding:14px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer}.calc-btn:hover{opacity:0.9}.calc-result{background:#0d1117;border:1px solid var(--border);border-radius:8px;padding:20px;margin-top:20px}.res-big{font-size:32px;font-weight:700;margin:8px 0;text-align:center}.res-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px}.res-label{color:var(--text-muted)}</style>
-</head><body class="dark"><header class="navbar"><div class="nav-left"><img src="../logo.png" class="logo" onclick="location.href='/'" alt="SRJahir Markets"><h1 class="brand">SRJahir Markets</h1></div><nav class="nav-right"><a href="/" class="btn ghost">Home</a><a href="/blog.html" class="btn ghost">Blog</a><a href="/tools/profit-loss-calculator.html" class="btn ghost">Tools</a></nav></header>
+</head><body class="dark"><header class="navbar"><div class="nav-left"><img src="../logo.png" class="logo" onclick="location.href='/'" alt="SRJahir Markets"><h1 class="brand">SRJahir Markets</h1></div><nav class="nav-right"><a href="/" class="btn ghost">Home</a><a href="../blog.html" class="btn ghost">Blog</a><a href="../tools/profit-loss-calculator.html" class="btn ghost">Tools</a></nav></header>
 <div class="page-content" style="max-width:700px">
 <h1>Currency Converter — Live Exchange Rates</h1>
 <p>Convert between 30+ world currencies with live rates. Essential for international investors tracking US stocks.</p>
@@ -36,17 +36,17 @@ async function convertCurrency(){
   const to=document.getElementById('toCur').value;
   if(!amt)return alert('Enter amount');
   try{
-    const r=await fetch(`https://api.frankfurter.app/latest?amount=${amt}&from=${from}&to=${to}`);
+    const r=await fetch(`https://open.er-api.com/v6/latest/${from}`);
     const d=await r.json();
-    const converted=d.rates[to];
-    const rate=converted/amt;
+    const rate=d.rates[to];
+    const converted=amt*rate;
     document.getElementById('result').style.display='block';
     document.getElementById('result').innerHTML=`
       <div class="res-big" style="color:#4da3ff">${to} ${converted.toLocaleString('en-US',{maximumFractionDigits:2})}</div>
       <div style="text-align:center;font-size:14px;color:var(--text-muted);margin-bottom:16px">${amt.toLocaleString()} ${from} = ${converted.toLocaleString('en-US',{maximumFractionDigits:2})} ${to}</div>
       <div class="res-row"><span class="res-label">Exchange Rate</span><span>1 ${from} = ${rate.toFixed(4)} ${to}</span></div>
       <div class="res-row"><span class="res-label">Inverse Rate</span><span>1 ${to} = ${(1/rate).toFixed(4)} ${from}</span></div>
-      <div style="text-align:center;font-size:11px;color:var(--text-muted);margin-top:12px">Rate from European Central Bank · Updated ${d.date}</div>`;
+      <div style="text-align:center;font-size:11px;color:var(--text-muted);margin-top:12px">Rate updated: ${d.time_last_update_utc?.slice(0,16) || 'today'}</div>`;
   }catch{
     document.getElementById('result').style.display='block';
     document.getElementById('result').innerHTML='<p style="color:var(--red)">Failed to fetch rates. Try again.</p>';
@@ -58,6 +58,6 @@ async function convertCurrency(){
 <p>Most searched currency pairs: USD/INR (US Dollar to Indian Rupee), EUR/USD (Euro to Dollar), GBP/USD (British Pound to Dollar), USD/JPY (Dollar to Japanese Yen), USD/AED (Dollar to UAE Dirham).</p>
 <h2>Why International Investors Need Currency Conversion</h2>
 <p>If you're investing in US stocks from India, UK, or anywhere outside the US, your actual returns are affected by currency exchange rates. A stock might go up 10% in USD, but if your local currency strengthened 5% against the dollar, your real return is only about 5%.</p>
-<p>Track live forex rates: <a href="/markets/forex.html">Forex Market</a> | See also: <a href="/pages/market-hours.html">Market Hours</a></p>
+<p>Track live forex rates: <a href="../markets/forex.html">Forex Market</a> | See also: <a href="../pages/market-hours.html">Market Hours</a></p>
 </div>
-<div class="cta-banner"><h3>Ask CloudAI About This</h3><p>AI-powered analysis and research assistant.</p><a href="https://cloudai.srjahir.in" target="_blank" class="cta-btn">Try CloudAI Free →</a></div><footer class="footer"><div class="footer-links"><a href="/pages/about.html">About</a><a href="/pages/contact.html">Contact</a><a href="/pages/privacy.html">Privacy</a><a href="/pages/terms.html">Terms</a><a href="/pages/disclaimer.html">Disclaimer</a><a href="/pages/market-holidays.html">Market Holidays</a><a href="/pages/market-hours.html">Market Hours</a><a href="/blog.html">Blog</a></div><p class="footer-copy">© 2026 <a href="https://srjahir.in">SRJahir Tech</a> — stocks.srjahir.in</p><p class="footer-disc">Market data by Finnhub. Not financial advice.</p></footer></body></html>
+<div class="cta-banner"><h3>Ask CloudAI About This</h3><p>AI-powered analysis and research assistant.</p><a href="https://cloudai.srjahir.in" target="_blank" class="cta-btn">Try CloudAI Free →</a></div><footer class="footer"><div class="footer-links"><a href="../pages/about.html">About</a><a href="../pages/contact.html">Contact</a><a href="../pages/privacy.html">Privacy</a><a href="../pages/terms.html">Terms</a><a href="../pages/disclaimer.html">Disclaimer</a><a href="../pages/market-holidays.html">Market Holidays</a><a href="../pages/market-hours.html">Market Hours</a><a href="../blog.html">Blog</a></div><p class="footer-copy">© 2026 <a href="https://srjahir.in">SRJahir Tech</a> — stocks.srjahir.in</p><p class="footer-disc">Market data by Finnhub. Not financial advice.</p></footer></body></html>
