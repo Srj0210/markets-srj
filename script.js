@@ -227,9 +227,11 @@ async function renderWatchlist(quotes) {
 /* ── NEWS ── */
 async function renderNews() {
   try {
-    const r = await fetch(`${API}/news?symbol=AAPL`);
+    const r = await fetch(`${API}/news?symbol=general`);
     const data = await r.json();
-    qs("#newsGrid").innerHTML = data.slice(0, 8).map(n => `
+    const newsArr = Array.isArray(data) ? data : [];
+    if (!newsArr.length) { qs("#newsGrid").innerHTML = "<p style='color:#666'>News temporarily unavailable.</p>"; return; }
+    qs("#newsGrid").innerHTML = newsArr.slice(0, 8).map(n => `
       <a href="${n.url}" target="_blank" rel="noopener" class="news-card">
         ${n.image ? `<img src="${n.image}" class="news-img" alt="${n.headline}" loading="lazy" />` : ''}
         <div class="news-body">

@@ -20,6 +20,7 @@
   <nav class="nav-right">
     <a href="/" class="btn ghost">Home</a>
     <a href="/blog.html" class="btn ghost">Blog</a>
+    <a href="/tools/profit-loss-calculator.html" class="btn ghost">Tools</a>
   </nav>
 </header>
 
@@ -46,10 +47,9 @@
       <button data-range="6M" class="range">6M</button>
       <button data-range="1Y" class="range">1Y</button>
       <button data-range="5Y" class="range">5Y</button>
-      <span class="type-switch">
-        <label><input type="radio" name="ctype" value="line" checked /> Line</label>
-        <label><input type="radio" name="ctype" value="candle" /> Candle</label>
-      </span>
+      <span style="flex:1"></span>
+      <button data-type="area" class="type-btn active">Area</button>
+      <button data-type="candle" class="type-btn">Candle</button>
     </div>
     <div id="chart" style="height:420px;"></div>
   </div>
