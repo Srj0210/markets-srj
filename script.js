@@ -227,11 +227,26 @@ async function renderWatchlist(quotes) {
 /* ── NEWS ── */
 async function renderNews() {
   try {
-    const r = await fetch(`${API}/news?symbol=general`);
-    const data = await r.json();
-    const newsArr = Array.isArray(data) ? data : [];
-    if (!newsArr.length) { qs("#newsGrid").innerHTML = "<p style='color:#666'>News temporarily unavailable.</p>"; return; }
-    qs("#newsGrid").innerHTML = newsArr.slice(0, 8).map(n => `
+    // Try multiple symbols for diverse news
+    const symbols = ["AAPL", "MSFT", "TSLA", "NVDA"];
+    let allNews = [];
+    for (const sym of symbols) {
+      try {
+        const r = await fetch(`${API}/news?symbol=${sym}`);
+        const data = await r.json();
+        if (Array.isArray(data)) allNews = allNews.concat(data);
+      } catch {}
+    }
+    // Deduplicate by headline and sort by date
+    const seen = new Set();
+    allNews = allNews.filter(n => {
+      if (seen.has(n.headline)) return false;
+      seen.add(n.headline);
+      return true;
+    }).sort((a, b) => (b.datetime || 0) - (a.datetime || 0));
+
+    if (!allNews.length) { qs("#newsGrid").innerHTML = "<p style='color:#666'>News temporarily unavailable.</p>"; return; }
+    qs("#newsGrid").innerHTML = allNews.slice(0, 8).map(n => `
       <a href="${n.url}" target="_blank" rel="noopener" class="news-card">
         ${n.image ? `<img src="${n.image}" class="news-img" alt="${n.headline}" loading="lazy" />` : ''}
         <div class="news-body">
