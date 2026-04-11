@@ -1,51 +1,89 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Commodity Prices Today — Gold, Silver, Oil, Gas [Live {YEAR}]</title>
-<meta name="description" content="Live commodity prices for Gold, Silver, Crude Oil, Natural Gas, Copper, and more. Track commodities in real-time.">
-<meta name="keywords" content="gold price today, silver price, oil price, commodity prices, WTI crude oil">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://stocks.srjahir.in/markets/commodities.html">
-<meta property="og:title" content="Commodity Prices Today — Gold, Silver, Oil, Gas [Live {YEAR}]">
-<meta property="og:description" content="Live commodity prices for Gold, Silver, Crude Oil, Natural Gas, Copper, and more. Track commodities in real-time.">
-<meta property="og:url" content="https://stocks.srjahir.in/markets/commodities.html">
-<meta property="og:type" content="article">
-<meta property="og:image" content="https://stocks.srjahir.in/logo.png">
+<title>Commodity Prices Today — Gold, Silver, Oil Live Charts [2026]</title>
+<meta name="description" content="Live commodity prices with professional charts. Track Gold, Silver, Crude Oil, Natural Gas, Copper prices in real-time with TradingView charts.">
+<link rel="canonical" href="https://market.srjahir.in/markets/commodities.html">
+<link rel="icon" type="image/png" href="../logo.png"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../styles.css">
+</head><body class="dark">
+<header class="navbar"><div class="nav-left"><img src="../logo.png" class="logo" alt="Logo" onclick="location.href='../index.html'"><h1 class="brand">SRJahir Markets</h1></div><nav class="nav-right"><a href="../index.html" class="btn ghost">Home</a><a href="../blog.html" class="btn ghost">Blog</a><a href="../tools/profit-loss-calculator.html" class="btn ghost">Tools</a></nav></header>
 
-<link rel="icon" type="image/png" href="../logo.png">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../styles.css">
+<div class="section" style="max-width:1000px;margin:30px auto">
+<h1 class="section-title" style="font-size:26px">Commodity Prices — Live Charts</h1>
+<p class="section-desc">Professional charts for Gold, Silver, Oil, and other major commodities.</p>
 
-</head><body class="dark"><header class="navbar"><div class="nav-left"><img src="../logo.png" class="logo" onclick="location.href='/'" alt="SRJahir Markets"><h1 class="brand">SRJahir Markets</h1></div><nav class="nav-right"><a href="/" class="btn ghost">Home</a><a href="../blog.html" class="btn ghost">Blog</a><a href="../tools/profit-loss-calculator.html" class="btn ghost">Tools</a></nav></header>
-<div class="section" style="max-width:900px;margin:30px auto">
-<h1 class="section-title" style="font-size:26px">Commodity Prices — Live</h1>
-<p class="section-desc">Track commodity prices through popular ETFs and futures proxies.</p>
-<div class="ad-slot"></div>
-<div id="commodGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px"><p style="color:var(--text-muted)">Loading commodity prices...</p></div>
+<!-- Quick Price Tiles -->
+<div id="commodTiles" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:20px"></div>
+
+<!-- Gold Chart -->
+<div class="tile" style="margin-bottom:14px">
+<h2 style="font-size:18px;margin-bottom:8px">🥇 Gold (XAU/USD)</h2>
+<div id="gold-chart" style="height:400px"></div>
+</div>
+
+<!-- Oil Chart -->
+<div class="tile" style="margin-bottom:14px">
+<h2 style="font-size:18px;margin-bottom:8px">🛢️ Crude Oil (CL)</h2>
+<div id="oil-chart" style="height:400px"></div>
+</div>
+
+<!-- Silver Chart -->
+<div class="tile" style="margin-bottom:14px">
+<h2 style="font-size:18px;margin-bottom:8px">🥈 Silver (XAG/USD)</h2>
+<div id="silver-chart" style="height:400px"></div>
+</div>
+
+<!-- Natural Gas Chart -->
+<div class="tile" style="margin-bottom:14px">
+<h2 style="font-size:18px;margin-bottom:8px">🔥 Natural Gas (NG)</h2>
+<div id="gas-chart" style="height:400px"></div>
+</div>
+
+<script src="https://s3.tradingview.com/tv.js"></script>
 <script>
-const API="https://autumn-band-75e8.surajmaitra1996.workers.dev";
-const commodities=[
-  {name:'Gold',sym:'GLD',unit:'$/oz',emoji:'🥇'},
-  {name:'Silver',sym:'SLV',unit:'$/oz',emoji:'🥈'},
-  {name:'Crude Oil',sym:'USO',unit:'$/barrel',emoji:'🛢️'},
-  {name:'Natural Gas',sym:'UNG',unit:'$/mmbtu',emoji:'🔥'},
-  {name:'Copper',sym:'CPER',unit:'$/lb',emoji:'🟤'},
-  {name:'Agriculture',sym:'DBA',unit:'index',emoji:'🌾'},
+const API = "https://autumn-band-75e8.surajmaitra1996.workers.dev";
+const fmt = n => n ? "$"+Number(n).toFixed(2) : "—";
+
+// TradingView charts for each commodity
+function tv(id, sym) {
+  new TradingView.widget({
+    container_id: id, symbol: sym, interval: "D", timezone: "Etc/UTC", theme: "dark",
+    style: "1", locale: "en", toolbar_bg: "#0c0f17", enable_publishing: false,
+    allow_symbol_change: false, save_image: true, studies: ["RSI@tv-basicstudies"],
+    width: "100%", height: 400, backgroundColor: "#0c0f17",
+  });
+}
+tv("gold-chart", "TVC:GOLD");
+tv("oil-chart", "TVC:USOIL");
+tv("silver-chart", "TVC:SILVER");
+tv("gas-chart", "TVC:NATURALGAS");
+
+// Quick price tiles from Finnhub ETF proxies
+const comms = [
+  {name:"Gold",sym:"GLD",emoji:"🥇"},
+  {name:"Silver",sym:"SLV",emoji:"🥈"},
+  {name:"Oil",sym:"USO",emoji:"🛢️"},
+  {name:"Nat Gas",sym:"UNG",emoji:"🔥"},
+  {name:"Copper",sym:"CPER",emoji:"🟤"},
+  {name:"Agri",sym:"DBA",emoji:"🌾"},
 ];
-async function loadCommod(){
-  const results=await Promise.all(commodities.map(async c=>{
-    try{const r=await fetch(API+'/quote?symbol='+c.sym);return{...c,q:await r.json()}}catch{return{...c,q:null}}
+async function loadTiles() {
+  const results = await Promise.all(comms.map(async c => {
+    try { const r = await fetch(API+'/quote?symbol='+c.sym); return {...c, q: await r.json()}; }
+    catch { return {...c, q: null}; }
   }));
-  document.getElementById('commodGrid').innerHTML=results.map(c=>{
-    if(!c.q||!c.q.c)return `<div class="tile"><div>${c.emoji} ${c.name}</div><div>—</div></div>`;
-    const ch=((c.q.c-c.q.pc)/c.q.pc*100);
-    return `<div class="tile"><div style="font-size:20px;margin-bottom:4px">${c.emoji} ${c.name}</div><div style="font-size:13px;color:var(--text-muted)">${c.sym} ETF</div><div style="font-size:24px;font-weight:700;margin:6px 0">$${c.q.c.toFixed(2)}</div><div class="${ch>=0?'pos':'neg'}" style="font-weight:600">${ch>=0?'+':''}${ch.toFixed(2)}%</div></div>`;
+  document.getElementById("commodTiles").innerHTML = results.map(c => {
+    if (!c.q?.c) return `<div class="tile"><div>${c.emoji} ${c.name}</div><div>—</div></div>`;
+    const ch = ((c.q.c-c.q.pc)/c.q.pc*100);
+    return `<div class="tile"><div style="font-size:14px">${c.emoji} ${c.name}</div><div style="font-size:11px;color:var(--text-muted)">${c.sym} ETF</div><div style="font-size:20px;font-weight:700;margin:4px 0">${fmt(c.q.c)}</div><div class="${ch>=0?'pos':'neg'}" style="font-weight:600;font-size:13px">${ch>=0?'+':''}${ch.toFixed(2)}%</div></div>`;
   }).join('');
 }
-loadCommod();
+loadTiles();
 </script>
-<div class="ad-slot"></div>
-<h2>How to Invest in Commodities</h2>
-<p>The easiest way to invest in commodities is through ETFs. <strong>GLD</strong> tracks gold, <strong>SLV</strong> tracks silver, and <strong>USO</strong> tracks crude oil. You can buy these just like regular stocks through any brokerage.</p>
-<p>Gold is often considered a "safe haven" during market downturns and inflation. Oil prices affect energy stocks and the broader economy.</p>
-<p><a href="../markets/crypto.html">Crypto</a> | <a href="../markets/forex.html">Forex</a> | <a href="/">US Stocks</a></p>
+
+<h2 style="margin-top:30px">How to Invest in Commodities</h2>
+<p style="color:var(--text-muted);line-height:1.7">The easiest way is through ETFs: <strong>GLD</strong> for gold, <strong>SLV</strong> for silver, <strong>USO</strong> for oil. Gold is a "safe haven" during downturns. Oil prices affect energy stocks and the economy.</p>
+<p style="margin-top:12px"><a href="crypto.html" style="color:var(--blue)">Crypto</a> · <a href="forex.html" style="color:var(--blue)">Forex</a> · <a href="../index.html" style="color:var(--blue)">US Stocks</a></p>
 </div>
-<div class="cta-banner"><h3>Ask CloudAI About This</h3><p>AI-powered analysis and research assistant.</p><a href="https://cloudai.srjahir.in" target="_blank" class="cta-btn">Try CloudAI Free →</a></div><footer class="footer"><div class="footer-links"><a href="../pages/about.html">About</a><a href="../pages/contact.html">Contact</a><a href="../pages/privacy.html">Privacy</a><a href="../pages/terms.html">Terms</a><a href="../pages/disclaimer.html">Disclaimer</a><a href="../pages/market-holidays.html">Market Holidays</a><a href="../pages/market-hours.html">Market Hours</a><a href="../blog.html">Blog</a></div><p class="footer-copy">© 2026 <a href="https://srjahir.in">SRJahir Tech</a> — stocks.srjahir.in</p><p class="footer-disc">Market data by Finnhub. Not financial advice.</p></footer></body></html>
+
+<div class="cta-banner"><h3>Ask CloudAI About Commodities</h3><p>AI-powered analysis and research.</p><a href="https://cloudai.srjahir.in" target="_blank" class="cta-btn">Try CloudAI Free →</a></div>
+<footer class="footer"><div class="footer-links"><a href="../pages/about.html">About</a><a href="../pages/contact.html">Contact</a><a href="../pages/privacy.html">Privacy</a><a href="../pages/disclaimer.html">Disclaimer</a><a href="../blog.html">Blog</a></div><p class="footer-copy">© 2026 <a href="https://srjahir.in">SRJahir Tech</a> — market.srjahir.in</p></footer>
+</body></html>

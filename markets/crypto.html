@@ -1,47 +1,86 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Crypto Prices Today — Bitcoin, Ethereum & Top Cryptocurrencies [Live]</title>
-<meta name="description" content="Live cryptocurrency prices for Bitcoin, Ethereum, and top 20 coins. Real-time market cap, 24h change, and price charts.">
-<meta name="keywords" content="crypto prices, bitcoin price, ethereum price, cryptocurrency market">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://stocks.srjahir.in/markets/crypto.html">
-<meta property="og:title" content="Crypto Prices Today — Bitcoin, Ethereum & Top Cryptocurrencies [Live]">
-<meta property="og:description" content="Live cryptocurrency prices for Bitcoin, Ethereum, and top 20 coins. Real-time market cap, 24h change, and price charts.">
-<meta property="og:url" content="https://stocks.srjahir.in/markets/crypto.html">
-<meta property="og:type" content="article">
-<meta property="og:image" content="https://stocks.srjahir.in/logo.png">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the price of Bitcoin today?", "acceptedAnswer": {"@type": "Answer", "text": "Bitcoin's price changes every second. Check the live price above for the latest BTC/USD rate."}}, {"@type": "Question", "name": "Is crypto a good investment?", "acceptedAnswer": {"@type": "Answer", "text": "Cryptocurrency is highly volatile and speculative. Only invest what you can afford to lose. It's not a substitute for a diversified stock portfolio."}}]}</script>
-<link rel="icon" type="image/png" href="../logo.png">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../styles.css">
+<title>Crypto Prices Today — Bitcoin, Ethereum Live Charts & Prices</title>
+<meta name="description" content="Live cryptocurrency prices with professional charts. Track Bitcoin, Ethereum, Solana, XRP and top 20 coins with real-time data and TradingView charts.">
+<link rel="canonical" href="https://market.srjahir.in/markets/crypto.html">
+<link rel="icon" type="image/png" href="../logo.png"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../styles.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the price of Bitcoin today?","acceptedAnswer":{"@type":"Answer","text":"Bitcoin's price changes every second. Check the live price and chart above for the latest BTC/USD rate."}},{"@type":"Question","name":"Is crypto a good investment in 2026?","acceptedAnswer":{"@type":"Answer","text":"Cryptocurrency is highly volatile. Most advisors recommend keeping crypto to 5% or less of your portfolio. Consider S&P 500 ETFs for more stable long-term growth."}}]}</script>
+</head><body class="dark">
+<header class="navbar"><div class="nav-left"><img src="../logo.png" class="logo" alt="Logo" onclick="location.href='../index.html'"><h1 class="brand">SRJahir Markets</h1></div><nav class="nav-right"><a href="../index.html" class="btn ghost">Home</a><a href="../blog.html" class="btn ghost">Blog</a><a href="../tools/profit-loss-calculator.html" class="btn ghost">Tools</a></nav></header>
 
-</head><body class="dark"><header class="navbar"><div class="nav-left"><img src="../logo.png" class="logo" onclick="location.href='/'" alt="SRJahir Markets"><h1 class="brand">SRJahir Markets</h1></div><nav class="nav-right"><a href="/" class="btn ghost">Home</a><a href="../blog.html" class="btn ghost">Blog</a><a href="../tools/profit-loss-calculator.html" class="btn ghost">Tools</a></nav></header>
-<div class="section" style="max-width:900px;margin:30px auto">
-<h1 class="section-title" style="font-size:26px">Cryptocurrency Prices — Live</h1>
-<p class="section-desc">Real-time prices for Bitcoin, Ethereum, and top cryptocurrencies. Data refreshes every 60 seconds.</p>
-<div class="ad-slot"></div>
-<div id="cryptoGrid" style="display:flex;flex-direction:column;gap:8px">
-<p style="color:var(--text-muted)">Loading crypto prices...</p>
+<div class="section" style="max-width:1000px;margin:30px auto">
+<h1 class="section-title" style="font-size:26px">Cryptocurrency Prices — Live Charts</h1>
+<p class="section-desc">Real-time prices and professional TradingView charts for top cryptocurrencies.</p>
+
+<!-- BTC Chart -->
+<div class="tile" style="margin-bottom:14px">
+<h2 style="font-size:18px;margin-bottom:8px">Bitcoin (BTC/USD)</h2>
+<div id="btc-chart" style="height:400px"></div>
 </div>
+
+<!-- ETH Chart -->
+<div class="tile" style="margin-bottom:14px">
+<h2 style="font-size:18px;margin-bottom:8px">Ethereum (ETH/USD)</h2>
+<div id="eth-chart" style="height:400px"></div>
+</div>
+
+<!-- Top 20 Coins List -->
+<h2 class="section-title" style="margin-top:24px">Top 20 Cryptocurrencies by Market Cap</h2>
+<div id="cryptoGrid" style="display:flex;flex-direction:column;gap:4px"><p style="color:var(--text-muted)">Loading prices...</p></div>
+
+<script src="https://s3.tradingview.com/tv.js"></script>
 <script>
-async function loadCrypto(){
-  try{
-    const r=await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&sparkline=false&price_change_percentage=24h');
-    const data=await r.json();
-    document.getElementById('cryptoGrid').innerHTML=`
-      <div class="res-row" style="font-weight:600;color:var(--text-muted);font-size:13px"><span style="min-width:30px">#</span><span style="flex:2">Name</span><span style="flex:1;text-align:right">Price</span><span style="flex:1;text-align:right">24h %</span><span style="flex:1;text-align:right;display:var(--show-mcap,block)">Market Cap</span></div>
-    `+data.map((c,i)=>{
-      const ch=c.price_change_percentage_24h||0;
-      return `<div class="mini-row" style="cursor:default"><span style="min-width:30px;color:var(--text-muted)">${i+1}</span><span style="flex:2;display:flex;align-items:center;gap:8px"><img src="${c.image}" style="width:24px;height:24px;border-radius:50%"><strong>${c.symbol.toUpperCase()}</strong> <span style="color:var(--text-muted);font-size:12px">${c.name}</span></span><span style="flex:1;text-align:right;font-weight:600">$${c.current_price.toLocaleString('en-US')}</span><span style="flex:1;text-align:right" class="${ch>=0?'pos':'neg'}">${ch>=0?'+':''}${ch.toFixed(2)}%</span><span style="flex:1;text-align:right;color:var(--text-muted);font-size:12px">$${(c.market_cap/1e9).toFixed(1)}B</span></div>`;
-    }).join('');
-  }catch{document.getElementById('cryptoGrid').innerHTML='<p style="color:var(--red)">Failed to load crypto data.</p>'}
+function createChart(containerId, symbol) {
+  new TradingView.widget({
+    container_id: containerId,
+    symbol: symbol,
+    interval: "D",
+    timezone: "Etc/UTC",
+    theme: "dark",
+    style: "1",
+    locale: "en",
+    toolbar_bg: "#0c0f17",
+    enable_publishing: false,
+    allow_symbol_change: false,
+    hide_top_toolbar: false,
+    save_image: true,
+    studies: ["RSI@tv-basicstudies"],
+    width: "100%",
+    height: 400,
+    backgroundColor: "#0c0f17",
+  });
 }
-loadCrypto();setInterval(loadCrypto,60000);
+createChart("btc-chart", "BINANCE:BTCUSDT");
+createChart("eth-chart", "BINANCE:ETHUSDT");
+
+// Load top 20 from CoinGecko
+async function loadCrypto() {
+  try {
+    const r = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&sparkline=false');
+    const data = await r.json();
+    document.getElementById('cryptoGrid').innerHTML = `
+      <div style="display:flex;padding:10px 14px;font-size:12px;color:var(--text-muted);font-weight:600">
+        <span style="min-width:30px">#</span><span style="flex:2">Name</span><span style="flex:1;text-align:right">Price</span><span style="flex:1;text-align:right">24h</span><span style="flex:1;text-align:right">Market Cap</span>
+      </div>` + data.map((c, i) => {
+      const ch = c.price_change_percentage_24h || 0;
+      return `<div class="mini-row" style="cursor:default;padding:12px 14px">
+        <span style="min-width:30px;color:var(--text-muted)">${i+1}</span>
+        <span style="flex:2;display:flex;align-items:center;gap:8px"><img src="${c.image}" style="width:22px;height:22px;border-radius:50%"><strong>${c.symbol.toUpperCase()}</strong> <span style="color:var(--text-muted);font-size:11px">${c.name}</span></span>
+        <span style="flex:1;text-align:right;font-weight:600">$${c.current_price.toLocaleString('en-US')}</span>
+        <span style="flex:1;text-align:right" class="${ch>=0?'pos':'neg'}">${ch>=0?'+':''}${ch.toFixed(2)}%</span>
+        <span style="flex:1;text-align:right;color:var(--text-muted);font-size:11px">$${(c.market_cap/1e9).toFixed(1)}B</span>
+      </div>`;
+    }).join('');
+  } catch { document.getElementById('cryptoGrid').innerHTML = '<p style="color:var(--red)">Failed to load.</p>'; }
+}
+loadCrypto();
+setInterval(loadCrypto, 60000);
 </script>
-<div class="ad-slot"></div>
-<h2>What is Cryptocurrency?</h2>
-<p>Cryptocurrency is a digital or virtual currency that uses cryptography for security. Bitcoin, created in 2009, was the first cryptocurrency. Today there are thousands of different cryptocurrencies (often called "altcoins") with various use cases from decentralized finance to smart contracts.</p>
-<h2>Should I Invest in Crypto?</h2>
-<p>Cryptocurrency is extremely volatile — prices can swing 10-20% in a single day. Most financial advisors recommend keeping crypto to a small portion (5% or less) of your overall portfolio. If you're looking for more stable investments, consider <a href="../blog/best-sp500-etfs-2026.html">S&P 500 ETFs</a> or <a href="../blog/top-dividend-stocks-2026.html">dividend stocks</a>.</p>
-<p>Track US stock market: <a href="/">SRJahir Markets Home</a> | <a href="../markets/forex.html">Forex Rates</a> | <a href="../markets/commodities.html">Commodities</a></p>
+
+<h2 style="margin-top:30px">What is Cryptocurrency?</h2>
+<p style="color:var(--text-muted);line-height:1.7">Cryptocurrency is digital currency secured by cryptography. Bitcoin, created in 2009, was the first. Today thousands of "altcoins" exist for decentralized finance, smart contracts, and more. Crypto is extremely volatile — prices can swing 10-20% daily. Most advisors recommend keeping crypto to 5% or less of your portfolio.</p>
+<p style="margin-top:12px"><a href="../markets/forex.html" style="color:var(--blue)">Forex Rates</a> · <a href="../markets/commodities.html" style="color:var(--blue)">Commodities</a> · <a href="../index.html" style="color:var(--blue)">US Stocks</a></p>
 </div>
-<div class="cta-banner"><h3>Ask CloudAI About Crypto</h3><p>AI-powered analysis and research assistant.</p><a href="https://cloudai.srjahir.in" target="_blank" class="cta-btn">Try CloudAI Free →</a></div><footer class="footer"><div class="footer-links"><a href="../pages/about.html">About</a><a href="../pages/contact.html">Contact</a><a href="../pages/privacy.html">Privacy</a><a href="../pages/terms.html">Terms</a><a href="../pages/disclaimer.html">Disclaimer</a><a href="../pages/market-holidays.html">Market Holidays</a><a href="../pages/market-hours.html">Market Hours</a><a href="../blog.html">Blog</a></div><p class="footer-copy">© 2026 <a href="https://srjahir.in">SRJahir Tech</a> — stocks.srjahir.in</p><p class="footer-disc">Market data by Finnhub. Not financial advice.</p></footer></body></html>
+
+<div class="cta-banner"><h3>Ask CloudAI About Crypto</h3><p>AI-powered analysis and research.</p><a href="https://cloudai.srjahir.in" target="_blank" class="cta-btn">Try CloudAI Free →</a></div>
+<footer class="footer"><div class="footer-links"><a href="../pages/about.html">About</a><a href="../pages/contact.html">Contact</a><a href="../pages/privacy.html">Privacy</a><a href="../pages/disclaimer.html">Disclaimer</a><a href="../blog.html">Blog</a></div><p class="footer-copy">© 2026 <a href="https://srjahir.in">SRJahir Tech</a> — market.srjahir.in</p></footer>
+</body></html>

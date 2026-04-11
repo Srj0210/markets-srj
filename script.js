@@ -33,9 +33,16 @@ const SECTORS = [
 /* Extra stocks for gainers/losers */
 const EXTRA = ["GOOG", "NFLX", "CRM", "ORCL", "AVGO", "PLTR", "COIN", "SQ", "SHOP", "UBER", "INTC", "BA", "DIS", "PYPL"];
 
-/* ── BATCH FETCH (parallel, not sequential) ── */
+/* ── BATCH FETCH with CACHE ── */
 async function batchQuotes(symbols) {
   const results = {};
+  // Load cached data first (instant display)
+  const cached = sessionStorage.getItem("srj_quotes");
+  if (cached) {
+    try { Object.assign(results, JSON.parse(cached)); } catch {}
+  }
+  
+  // Fetch fresh data in parallel
   const promises = symbols.map(async sym => {
     try {
       const r = await fetch(`${API}/quote?symbol=${sym}`);
@@ -44,6 +51,9 @@ async function batchQuotes(symbols) {
     } catch {}
   });
   await Promise.all(promises);
+  
+  // Cache for next refresh
+  try { sessionStorage.setItem("srj_quotes", JSON.stringify(results)); } catch {}
   return results;
 }
 
@@ -227,23 +237,24 @@ async function renderWatchlist(quotes) {
 /* ── NEWS ── */
 async function renderNews() {
   try {
-    // Try multiple symbols for diverse news
-    const symbols = ["AAPL", "MSFT", "TSLA", "NVDA"];
-    let allNews = [];
-    for (const sym of symbols) {
-      try {
-        const r = await fetch(`${API}/news?symbol=${sym}`);
-        const data = await r.json();
-        if (Array.isArray(data)) allNews = allNews.concat(data);
-      } catch {}
-    }
-    // Deduplicate by headline and sort by date
+    // Fetch from diverse sectors for broad market news
+    const symbols = ["AAPL", "MSFT", "TSLA", "NVDA", "JPM", "XOM", "UNH", "SPY"];
+    const allFetches = symbols.map(sym => 
+      fetch(`${API}/news?symbol=${sym}`).then(r => r.json()).catch(() => [])
+    );
+    const results = await Promise.all(allFetches);
+    let allNews = results.flat();
+    
+    // Deduplicate by headline
     const seen = new Set();
     allNews = allNews.filter(n => {
-      if (seen.has(n.headline)) return false;
+      if (!n || !n.headline || seen.has(n.headline)) return false;
       seen.add(n.headline);
       return true;
-    }).sort((a, b) => (b.datetime || 0) - (a.datetime || 0));
+    });
+    
+    // Sort by newest first
+    allNews.sort((a, b) => (b.datetime || 0) - (a.datetime || 0));
 
     if (!allNews.length) { qs("#newsGrid").innerHTML = "<p style='color:#666'>News temporarily unavailable.</p>"; return; }
     qs("#newsGrid").innerHTML = allNews.slice(0, 8).map(n => `
@@ -267,7 +278,20 @@ let allQuotes = {};
 async function loadAll() {
   updateMarketStatus();
 
-  // Batch ALL quotes in parallel
+  // Render cached data IMMEDIATELY (no blank screen)
+  const cached = sessionStorage.getItem("srj_quotes");
+  if (cached) {
+    try {
+      const cachedQuotes = JSON.parse(cached);
+      renderIndices(cachedQuotes);
+      renderTrending(cachedQuotes);
+      renderGainersLosers(cachedQuotes);
+      renderSectors(cachedQuotes);
+      renderWatchlist(cachedQuotes);
+    } catch {}
+  }
+
+  // Then fetch fresh data
   const allSymbols = [
     ...INDICES.map(i => i.sym),
     ...TRENDING,

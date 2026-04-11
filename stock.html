@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title id="pageTitle">Stock Price & Chart — SRJahir Markets</title>
-  <meta name="description" id="pageMeta" content="Live stock price, interactive chart, fundamentals, and news. Track this stock in real-time on SRJahir Markets." />
-  <meta name="robots" content="index, follow" />
-  <link rel="icon" type="image/png" href="logo.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
-  <script src="https://unpkg.com/lightweight-charts@4.1.0/dist/lightweight-charts.standalone.production.js"></script>
+  <meta name="description" id="pageMeta" content="Live stock price, professional chart with indicators and drawing tools, fundamentals, and news.">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body class="dark">
 <header class="navbar">
   <div class="nav-left">
-    <img src="logo.png" class="logo" alt="SRJahir Markets" onclick="location.href='/'" />
+    <img src="logo.png" class="logo" alt="SRJahir Markets" onclick="location.href='index.html'">
     <h1 class="brand">SRJahir Markets</h1>
   </div>
   <nav class="nav-right">
@@ -25,53 +24,48 @@
 </header>
 
 <div class="section">
-  <div class="tile stock-header-tile">
+  <!-- Stock Header -->
+  <div class="tile stock-header-tile" id="stockHeader">
     <div>
-      <h2 id="stockName">Loading...</h2>
+      <h2 id="stockName" style="font-size:24px">Loading...</h2>
       <div id="stockSymbol" class="symbol-sub"></div>
     </div>
     <div style="text-align:right">
       <div id="stockPrice" class="big-price">—</div>
       <div id="stockChange" class="change-tag">—</div>
-      <button id="watchBtn" class="btn ghost small-btn">☆ Watch</button>
+      <button id="watchBtn" class="btn ghost small-btn" onclick="toggleWatch()">☆ Watch</button>
     </div>
   </div>
 
-  <div class="ad-slot"></div>
-
-  <div class="tile">
-    <div class="chart-toolbar">
-      <button data-range="1D" class="range">1D</button>
-      <button data-range="1W" class="range">1W</button>
-      <button data-range="1M" class="range active">1M</button>
-      <button data-range="6M" class="range">6M</button>
-      <button data-range="1Y" class="range">1Y</button>
-      <button data-range="5Y" class="range">5Y</button>
-      <span style="flex:1"></span>
-      <button data-type="area" class="type-btn active">Area</button>
-      <button data-type="candle" class="type-btn">Candle</button>
-    </div>
-    <div id="chart" style="height:420px;"></div>
+  <!-- TradingView Advanced Chart -->
+  <div class="tile" style="padding:0;overflow:hidden;border-radius:12px">
+    <div id="tv-chart" style="height:500px"></div>
   </div>
 
+  <!-- Quick Info Bar -->
+  <div style="display:flex;gap:10px;margin:14px 0;flex-wrap:wrap">
+    <a href="tools/stock-compare.html" class="btn ghost" style="font-size:12px">📊 Compare with Another Stock</a>
+    <a href="tools/profit-loss-calculator.html" class="btn ghost" style="font-size:12px">🧮 Profit Calculator</a>
+    <a href="tools/dividend-calculator.html" class="btn ghost" style="font-size:12px">💰 Dividend Calculator</a>
+  </div>
+
+  <!-- Fundamentals + News -->
   <div class="grid fundamentals-grid">
     <div class="tile">
-      <h3>Fundamentals</h3>
+      <h3 style="margin-bottom:12px">Fundamentals</h3>
       <ul id="fundList" class="fund-list"></ul>
     </div>
     <div class="tile">
-      <h3>Related News</h3>
+      <h3 style="margin-bottom:12px">Latest News</h3>
       <div id="relatedNews"></div>
     </div>
   </div>
-
-  <div class="ad-slot"></div>
 </div>
 
 <div class="cta-banner">
   <h3>Ask CloudAI About This Stock</h3>
-  <p>Get AI-powered analysis, comparisons, and explanations.</p>
-  <a href="https://cloudai.srjahir.in" target="_blank" class="cta-btn">Try CloudAI →</a>
+  <p>Get AI-powered analysis, price predictions, and explanations.</p>
+  <a href="https://cloudai.srjahir.in" target="_blank" class="cta-btn">Try CloudAI Free →</a>
 </div>
 
 <footer class="footer">
@@ -80,19 +74,121 @@
     <a href="pages/contact.html">Contact</a>
     <a href="pages/privacy.html">Privacy</a>
     <a href="pages/disclaimer.html">Disclaimer</a>
+    <a href="markets/crypto.html">Crypto</a>
+    <a href="markets/forex.html">Forex</a>
+    <a href="blog.html">Blog</a>
   </div>
-  <p class="footer-copy">© 2026 <a href="https://srjahir.in">SRJahir Tech</a></p>
-  <p class="footer-disc">Market data by Finnhub. Not financial advice.</p>
+  <p class="footer-copy">© 2026 <a href="https://srjahir.in">SRJahir Tech</a> — market.srjahir.in</p>
+  <p class="footer-disc">Market data by Finnhub & TradingView. Not financial advice.</p>
 </footer>
 
-<script src="script-stock.js" defer></script>
 <script>
-  // Dynamic SEO title
-  const sym = new URLSearchParams(location.search).get("symbol") || "";
-  if(sym) {
-    document.getElementById("pageTitle").textContent = `${sym.toUpperCase()} Stock Price & Chart — SRJahir Markets`;
-    document.getElementById("pageMeta").content = `Live ${sym.toUpperCase()} stock price, interactive chart, company fundamentals, and latest news on SRJahir Markets.`;
+/* ── CONFIG ── */
+const API = "https://autumn-band-75e8.surajmaitra1996.workers.dev";
+const SYMBOL = (new URLSearchParams(location.search).get("symbol") || "AAPL").toUpperCase();
+const fmt = n => n ? Number(n).toLocaleString("en-US", {minimumFractionDigits:2, maximumFractionDigits:2}) : "—";
+
+/* ── SEO ── */
+document.getElementById("pageTitle").textContent = `${SYMBOL} Stock Price & Chart — SRJahir Markets`;
+document.getElementById("pageMeta").content = `Live ${SYMBOL} stock price with professional TradingView chart, technical indicators, drawing tools, fundamentals, and news.`;
+
+/* ── WATCHLIST ── */
+const WK = "srj_watchlist_v2";
+function getW() { return JSON.parse(localStorage.getItem(WK) || "[]"); }
+function saveW(l) { localStorage.setItem(WK, JSON.stringify(l)); }
+function toggleWatch() {
+  const l = getW();
+  if (l.includes(SYMBOL)) saveW(l.filter(x => x !== SYMBOL));
+  else { l.push(SYMBOL); saveW(l); }
+  updWBtn();
+}
+function updWBtn() {
+  document.getElementById("watchBtn").textContent = getW().includes(SYMBOL) ? "★ Watching" : "☆ Watch";
+}
+
+/* ── LOAD HEADER ── */
+async function loadHeader() {
+  const [prof, q] = await Promise.all([
+    fetch(`${API}/profile?symbol=${SYMBOL}`).then(r=>r.json()).catch(()=>({})),
+    fetch(`${API}/quote?symbol=${SYMBOL}`).then(r=>r.json()).catch(()=>({}))
+  ]);
+  document.getElementById("stockName").textContent = prof.name || SYMBOL;
+  document.getElementById("stockSymbol").textContent = SYMBOL + (prof.exchange ? ` · ${prof.exchange}` : "");
+  if (q.c) {
+    const ch = ((q.c-q.pc)/q.pc)*100, diff = q.c-q.pc;
+    document.getElementById("stockPrice").textContent = "$" + fmt(q.c);
+    const el = document.getElementById("stockChange");
+    el.textContent = `${diff>=0?"+":""}${diff.toFixed(2)} (${ch>=0?"+":""}${ch.toFixed(2)}%)`;
+    el.classList.add(ch >= 0 ? "pos" : "neg");
+    document.title = `${SYMBOL} $${fmt(q.c)} (${ch>=0?"+":""}${ch.toFixed(2)}%) — SRJahir Markets`;
   }
+}
+
+/* ── TRADINGVIEW CHART ── */
+function loadTVChart() {
+  const script = document.createElement("script");
+  script.src = "https://s3.tradingview.com/tv.js";
+  script.onload = () => {
+    new TradingView.widget({
+      container_id: "tv-chart",
+      symbol: SYMBOL,
+      interval: "D",
+      timezone: "Etc/UTC",
+      theme: "dark",
+      style: "1",
+      locale: "en",
+      toolbar_bg: "#0c0f17",
+      enable_publishing: false,
+      allow_symbol_change: true,
+      hide_top_toolbar: false,
+      hide_legend: false,
+      save_image: true,
+      studies: ["RSI@tv-basicstudies", "MASimple@tv-basicstudies"],
+      width: "100%",
+      height: 500,
+      backgroundColor: "#0c0f17",
+      gridColor: "rgba(255,255,255,0.03)",
+    });
+  };
+  document.head.appendChild(script);
+}
+
+/* ── FUNDAMENTALS ── */
+async function loadFund() {
+  const [p, q] = await Promise.all([
+    fetch(`${API}/profile?symbol=${SYMBOL}`).then(r=>r.json()).catch(()=>({})),
+    fetch(`${API}/quote?symbol=${SYMBOL}`).then(r=>r.json()).catch(()=>({}))
+  ]);
+  const row = (l,v) => `<li><span style="color:#6b7280">${l}</span><strong style="float:right">${v||"—"}</strong></li>`;
+  document.getElementById("fundList").innerHTML =
+    row("Market Cap", p.marketCapitalization ? "$"+(p.marketCapitalization/1000).toFixed(1)+"B" : "—") +
+    row("Exchange", p.exchange) + row("Industry", p.finnhubIndustry) +
+    row("IPO Date", p.ipo) + row("Country", p.country) +
+    row("Day High", q.h ? "$"+fmt(q.h) : "—") + row("Day Low", q.l ? "$"+fmt(q.l) : "—") +
+    row("Prev Close", q.pc ? "$"+fmt(q.pc) : "—") + row("Open", q.o ? "$"+fmt(q.o) : "—") +
+    (p.weburl ? `<li style="margin-top:8px"><a href="${p.weburl}" target="_blank" style="color:#3b82f6;font-size:13px">${p.name||SYMBOL} Website →</a></li>` : "");
+}
+
+/* ── NEWS ── */
+async function loadNews() {
+  const c = document.getElementById("relatedNews");
+  try {
+    const news = await fetch(`${API}/news?symbol=${SYMBOL}`).then(r=>r.json());
+    if (!news?.length) { c.innerHTML = '<p style="color:#555">No recent news.</p>'; return; }
+    c.innerHTML = news.slice(0,6).map(n => `
+      <a href="${n.url}" target="_blank" rel="noopener" style="display:block;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);text-decoration:none;color:inherit">
+        <div style="font-size:13px;font-weight:600;line-height:1.4;color:#e6e6e6">${n.headline}</div>
+        <div style="font-size:11px;color:#555;margin-top:3px">${n.source} · ${new Date(n.datetime*1000).toLocaleDateString()}</div>
+      </a>`).join("");
+  } catch { c.innerHTML = '<p style="color:#555">News unavailable.</p>'; }
+}
+
+/* ── INIT ── */
+updWBtn();
+loadHeader();
+loadTVChart();
+loadFund();
+loadNews();
 </script>
 </body>
 </html>
