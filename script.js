@@ -127,7 +127,11 @@ function bindSearch() {
   });
 }
 
-function goStock(sym) { location.href = `stock.html?symbol=${sym}`; }
+function goStock(sym) {
+  // Detect base path for GitHub Pages subpath compatibility
+  const base = location.pathname.replace(/\/[^\/]*$/, '/');
+  location.href = base + `stock.html?symbol=${sym}`;
+}
 
 /* ── RENDER INDICES ── */
 function renderIndices(quotes) {

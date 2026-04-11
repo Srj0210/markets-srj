@@ -54,13 +54,13 @@ async function compareStocks(){
     const row=(label,v1,v2)=>`<div class="res-row"><span class="res-label">${label}</span><span>${v1}</span><span>${v2}</span></div>`;
     el.innerHTML=`
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0">
-        <div class="tile" style="text-align:center;cursor:pointer" onclick="location.href='/stock.html?symbol=${s1}'">
+        <div class="tile" style="text-align:center;cursor:pointer" onclick="location.href='../stock.html?symbol=${s1}'">
           <div style="font-size:24px;font-weight:700">${s1}</div>
           <div style="font-size:13px;color:var(--text-muted)">${p1.name||s1}</div>
           <div style="font-size:28px;font-weight:700;margin:8px 0">$${fmt(q1.c)}</div>
           <div class="${ch1>=0?'pos':'neg'}" style="font-weight:600">${ch1>=0?'+':''}${ch1.toFixed(2)}%</div>
         </div>
-        <div class="tile" style="text-align:center;cursor:pointer" onclick="location.href='/stock.html?symbol=${s2}'">
+        <div class="tile" style="text-align:center;cursor:pointer" onclick="location.href='../stock.html?symbol=${s2}'">
           <div style="font-size:24px;font-weight:700">${s2}</div>
           <div style="font-size:13px;color:var(--text-muted)">${p2.name||s2}</div>
           <div style="font-size:28px;font-weight:700;margin:8px 0">$${fmt(q2.c)}</div>
